@@ -1,0 +1,171 @@
+:root {
+    --brand: #ff6b98;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --bg: #fafafa;
+  }
+  
+
+  
+  /* ✅ หน้ารายงานร้านแบบเต็มจอ */
+  .report-page {
+    font-family: "Prompt", sans-serif;
+    background: var(--bg);
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    overflow-y: auto;   /* ✅ เลื่อนแนวตั้งได้ */
+    position: relative;
+    margin-left: 100px;
+  }
+  
+  /* ✅ พื้นที่เนื้อหาภายใน (ให้กว้างเกิน 100vw ได้จริง) */
+  .report {
+    min-width: 1400px;  /* ✅ กำหนดความกว้างขั้นต่ำ — ป้องกันโดนบีบ */
+    width: max-content; /* ✅ ถ้ามีเนื้อหาเยอะ ให้ขยายได้ไม่จำกัด */
+    height: max-content;
+    padding: 2.5rem 3rem;
+    display: block;     /* ✅ อย่าใช้ flex เพราะมันบีบ */
+    box-sizing: border-box;
+  }
+  
+  /* ===== Header ===== */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    
+  }
+  .header h1 {
+    color: var(--brand);
+    font-size: 1.6rem;
+    margin: 0;
+    
+  }
+  .header p {
+    color: var(--muted);
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .actions select,
+  .btn-export {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-family: "Prompt";
+    font-size: 0.95rem;
+  }
+  .btn-export {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.25s;
+  }
+  .btn-export:hover {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+  
+  /* ===== Chart Section ===== */
+  .chart-section {
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    padding: 28px;
+    margin-bottom: 28px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto; /* ✅ เลื่อนได้เมื่อจอเล็ก */
+  }
+  
+  /* กล่องเก็บกราฟ */
+  .chart-box {
+    position: relative;
+    min-width: 1000px; /* ✅ บังคับให้กว้างพอสำหรับ 12 เดือน */
+    height: 350px; /* ✅ ปรับสูงให้กราฟพอดี */
+  }
+  
+  /* Canvas ของ Chart.js */
+  .chart-box canvas {
+    min-width: 1000px; /* ✅ กันแท่งบีบจนชิดกันเกินไป */
+    width: 100%;
+  }
+  
+  
+  /* ===== Tables ===== */
+  .table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 28px;
+    min-width: 950px;
+  }
+  .table-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+  .table-card h3 {
+    color: var(--text);
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  .table-card table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .table-card th,
+  .table-card td {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .table-card th {
+    color: var(--brand);
+    background: #fff5f9;
+  }
+  
+  /* ===== Summary Cards ===== */
+  .summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    min-width: 1000px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    transition: transform 0.25s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+  }
+  .card .label {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.5rem;
+  }
+  .positive {
+    color: #059669;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  

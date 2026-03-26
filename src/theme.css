@@ -1,0 +1,75 @@
+/* ===============================
+   GLOBAL THEME : GLAM PINK
+================================ */
+:root {
+    /* Brand Colors */
+    --pink-soft: #ffe6ee;
+    --pink-main: #ffb3c6;
+    --pink-strong: #d85e79;
+  
+    /* Accent */
+    --cream: #fff7f9;
+    --lavender: #e6dceb;
+  
+    /* Text */
+    --brown-main: #75464a;
+    --brown-soft: #9a6b6f;
+  
+    /* UI */
+    --border-soft: #f2d6dc;
+    --shadow-soft: 0 12px 28px rgba(216, 94, 121, 0.18);
+    --shadow-card: 0 8px 22px rgba(0,0,0,.06);
+  
+    /* Radius */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+  }
+  /* ===============================
+   TYPOGRAPHY
+================================ */
+body {
+    font-family: "Prompt", system-ui, sans-serif;
+    color: var(--brown-main);
+    background: linear-gradient(
+      to bottom,
+      #fff,
+      var(--pink-soft)
+    );
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4 {
+    font-family: "Playfair Display", serif;
+    color: var(--brown-main);
+    letter-spacing: 0.3px;
+  }
+  
+  p, span, label {
+    color: var(--brown-soft);
+  }
+/* Buttons */
+.btn-brand {
+    background: linear-gradient(135deg, var(--pink-main), var(--pink-strong));
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 12px 20px;
+    font-weight: 600;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .btn-brand:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(216,94,121,.25);
+  }
+  
+  /* Cards */
+  .card,
+  .cardy {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-soft);
+  }
+    

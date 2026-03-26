@@ -1,0 +1,224 @@
+.footer-section {
+    background-color:#c5b5a9; /* สีพื้นหลังโทนเบจตามรูป */
+    padding: 60px 0 20px 0;
+    font-family: 'serif', 'Times New Roman';
+    color: #333;
+    position: relative;
+    border-top: 1px solid hsl(0, 0%, 87%);
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.2fr; /* แบ่ง 3 ส่วน */
+    gap: 40px;
+    align-items: start;
+    text-align: left;
+  }
+  
+  /* ส่วน Newsletter */
+  .footer-newsletter h3 {
+    letter-spacing: 2px;
+    font-weight: 400;
+    margin-bottom: 15px;
+  }
+  
+  .footer-newsletter p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #666;
+    max-width: 300px;
+  }
+  
+  .email-input-group {
+    margin-top: 25px;
+  }
+  
+  .email-input-group input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 15px;
+    outline: none;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .btn-subscribe {
+    background-color: #000000; /* สีน้ำตาลตามปุ่ม */
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 25px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+    transition: 0.3s;
+  }
+  
+  .btn-subscribe:hover {
+    background-color: #968c7d;
+  }
+  
+  /* ส่วน Branding (กลาง) */
+  .footer-branding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .logo-circle {
+    width: 80px;
+    height: 110px;
+    border: 1px solid #333;
+    border-radius: 50% / 40%; /* ทำทรงวงรี */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo-text {
+    font-size: 2.5rem;
+  }
+  
+  .tagline {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .social-links a {
+    color: #333;
+    margin: 0 10px;
+    font-size: 1rem;
+    transition: 0.3s;
+  }
+  
+  /* ส่วน Navigate (ขวา) */
+  .nav-header h3 {
+    letter-spacing: 2px;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+  
+  .nav-line {
+    height: 1px;
+    background-color: #ccc;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+  
+  .nav-links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 20px;
+  }
+  
+  .nav-item a {
+    text-decoration: none;
+    color: #333;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+  
+  /* Bottom Copyright */
+  .footer-bottom {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .footer-bottom p {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    color: #666;
+  }
+  
+  /* ปุ่มเลื่อนขึ้นด้านบน */
+  .scroll-top {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .footer-newsletter p, .footer-branding .tagline {
+      margin: 0 auto;
+    }
+    .email-input-group {
+      max-width: 300px;
+      margin: 20px auto;
+    }
+  }
+  /* แก้ไขจาก .logo-circle เดิม เป็น .logo-wrapper */
+.logo-wrapper {
+    width: 100px;  /* ปรับขนาดตามต้องการ */
+    height: 130px; /* ปรับขนาดตามต้องการ */
+    border: 1px solid #333;
+    border-radius: 50% / 40%; /* ทรงวงรีตามดีไซน์ต้นฉบับ */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow: hidden; /* กันรูปภาพล้นขอบวงรี */
+    padding: 10px;
+  }
+  
+  .logo-img {
+    transform: translateY(8px);
+    height: 400px;    /* ขนาดตามที่คุณกำหนดมาใน tag */
+    width: auto;     /* รักษาอัตราส่วนรูป */
+    object-fit: contain;
+  }
+  
+  /* เน้นจัดการให้ตัว Link กระจายเต็มวงรีและจัดกึ่งกลาง */
+.logo-wrapper .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none; /* เอาเส้นใต้ลิงก์ออก */
+  }
+  
+  .logo-img {
+    max-height: 50px; /* ปรับขนาดความสูงรูปตามความเหมาะสม */
+    width: auto;
+    object-fit: contain;
+    display: block; /* ป้องกันช่องว่างด้านล่างรูป */
+  }
+
+  /* ถ้าอยากให้รูปไม่มีวงรีล้อมรอบ ให้ใช้แบบนี้แทนครับ */
+  /*
+  .logo-wrapper {
+    margin-bottom: 20px;
+  }
+  .logo-img {
+    height: 50px;
+    width: auto;
+  }
+  */

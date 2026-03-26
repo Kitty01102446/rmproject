@@ -1,0 +1,527 @@
+/* =========================================
+   SIDEBAR – Nail Salon Pro
+========================================= */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #ffffff 0%, #fff5f9 100%);
+  border-right: 1px solid #f3e8ee;
+  padding: 28px 18px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff6b98;
+  margin-bottom: 28px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.menu a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #555;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 12px;
+  display: block;
+  transition: all 0.25s ease;
+}
+
+.menu a:hover {
+  background: #ffeaf2;
+  color: #ff4f87;
+  transform: translateX(4px);
+}
+
+.menu a.active {
+  background: linear-gradient(90deg, #ff6b98, #ff8fb3);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(255, 107, 152, 0.25);
+}
+
+/* Divider spacing for long menu */
+.menu a + a {
+  margin-top: 2px;
+}
+  
+  /* ===== Main ===== */
+  .dashboard {
+    flex: 1;
+    background: #fafafa;
+    padding: 32px 48px;
+    margin-left: 40px; /* ✅ ให้เนื้อหาชิดแนวกับ sidebar */
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  
+  
+  .dashboard h1 {
+    color: #ff6b98;
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 0;
+  }
+  
+  .subtitle {
+    color: #888;
+    margin-bottom: 28px;
+  }
+  
+  /* Stats cards */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+  }
+  .card {
+    background: #fff;
+    padding: 18px 22px;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  .card h2 {
+    margin: 4px 0 8px;
+    font-size: 1.6rem;
+    color: #111;
+  }
+  .trend.up {
+    color: #34c759;
+    font-weight: 500;
+  }
+  
+  /* Chart & bookings grid */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  .card.full {
+    height: 100%;
+  }
+  
+  .booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  .booking-table th,
+  .booking-table td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  .status {
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+  }
+  .status.confirmed {
+    background: #e8f7ef;
+    color: #28a745;
+  }
+  .status.pending {
+    background: #fff4e5;
+    color: #f5a623;
+  }
+  .status.done {
+    background: #f0f0f0;
+    color: #666;
+  }
+  
+  /* Alerts */
+  .card.alerts ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+  }
+  .card.alerts li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #f3f3f3;
+    padding: 10px 0;
+  }
+  .card.alerts span {
+    color: #aaa;
+    font-size: 0.85rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .sidebar {
+      display: none;
+    }
+    .dashboard {
+      margin-left: 0;
+      padding: 20px;
+    }
+  }
+  
+  :root {
+    --brand: #ff6b98;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --bg: #fafafa;
+  }
+  
+
+  
+  /* ✅ หน้ารายงานร้านแบบเต็มจอ */
+  .report-page {
+    font-family: "Prompt", sans-serif;
+    background: var(--bg);
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    overflow-y: auto;   /* ✅ เลื่อนแนวตั้งได้ */
+    position: relative;
+
+  }
+  
+  /* ✅ พื้นที่เนื้อหาภายใน (ให้กว้างเกิน 100vw ได้จริง) */
+  .report {
+    min-width: 1400px;  /* ✅ กำหนดความกว้างขั้นต่ำ — ป้องกันโดนบีบ */
+    width: max-content; /* ✅ ถ้ามีเนื้อหาเยอะ ให้ขยายได้ไม่จำกัด */
+    height: max-content;
+    padding: 2.5rem 3rem;
+    display: block;     /* ✅ อย่าใช้ flex เพราะมันบีบ */
+    box-sizing: border-box;
+  }
+  
+  /* ===== Header ===== */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    
+  }
+  .header h1 {
+    color: var(--brand);
+    font-size: 1.6rem;
+    margin: 0;
+    
+  }
+  .header p {
+    color: var(--muted);
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .actions select,
+  .btn-export {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-family: "Prompt";
+    font-size: 0.95rem;
+  }
+  .btn-export {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.25s;
+  }
+  .btn-export:hover {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+  
+  /* ===== Chart Section ===== */
+  .chart-section {
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    padding: 28px;
+    margin-bottom: 28px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto; /* ✅ เลื่อนได้เมื่อจอเล็ก */
+  }
+  
+  /* กล่องเก็บกราฟ */
+  .chart-box {
+    position: relative;
+    min-width: 1000px; /* ✅ บังคับให้กว้างพอสำหรับ 12 เดือน */
+    height: 350px; /* ✅ ปรับสูงให้กราฟพอดี */
+  }
+  
+  /* Canvas ของ Chart.js */
+  .chart-box canvas {
+    min-width: 1000px; /* ✅ กันแท่งบีบจนชิดกันเกินไป */
+    width: 100%;
+  }
+  
+  
+  /* ===== Tables ===== */
+  .table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 28px;
+    min-width: 950px;
+  }
+  .table-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+  .table-card h3 {
+    color: var(--text);
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  .table-card table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .table-card th,
+  .table-card td {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .table-card th {
+    color: var(--brand);
+    background: #fff5f9;
+  }
+  
+  /* ===== Summary Cards ===== */
+  .summary-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    transition: transform 0.25s;
+  }
+  .summary-card:hover {
+    transform: translateY(-4px);
+  }
+  .summary-card .label {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  .summary-card h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.5rem;
+  }
+  .positive {
+    color: #059669;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  
+  /* =========================================
+     GLOBAL ADMIN STRUCTURE
+  ========================================= */
+  
+  .admin-root {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #fffafd 0%, #fafafa 100%);
+    font-family: "Prompt", sans-serif;
+  }
+  
+  /* Shared content wrapper for all admin pages */
+  .admin-content {
+    flex: 1;
+    padding: 40px 50px;
+    box-sizing: border-box;
+  }
+  
+  /* Shared page title */
+  .page-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ff6b98;
+    margin-bottom: 6px;
+  }
+  
+  .page-subtitle {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 28px;
+  }
+  
+  /* =========================================
+     GLOBAL ADMIN CARD SYSTEM
+  ========================================= */
+  
+  .admin-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 6px 20px rgba(255, 107, 152, 0.08);
+    transition: all 0.25s ease;
+  }
+  
+  .admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(255, 107, 152, 0.12);
+  }
+  
+  .admin-card h3 {
+    font-size: 1rem;
+    margin-bottom: 14px;
+    color: #1f2937;
+  }
+  
+  /* =========================================
+     GLOBAL BUTTONS
+  ========================================= */
+  
+  .btn-primary {
+    background: linear-gradient(90deg, #ff6b98, #ff8fb3);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+  
+  .btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  
+  .btn-outline {
+    background: #fff;
+    border: 1px solid #ff6b98;
+    color: #ff6b98;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+  
+  .btn-outline:hover {
+    background: #ff6b98;
+    color: #fff;
+  }
+  
+  /* =========================================
+     GLOBAL TABLE STYLE
+  ========================================= */
+  
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .admin-table th {
+    background: #fff0f6;
+    color: #ff6b98;
+    font-weight: 600;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 0.9rem;
+  }
+  
+  .admin-table tr:hover {
+    background: #fff5fa;
+  }
+  
+/* ✅ แก้ไข Dashboard/Report Container */
+.dashboard.report {
+  flex: 1;
+  padding: 32px 48px;
+  margin-left: 0;      /* ✅ ลบการดัน */
+  box-sizing: border-box;
+
+  width: 100%;
+  max-width: 1400px;     /* ✅ เอา 1400px ออก */
+  margin: 0;           /* ✅ เอา auto ออก */
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* ให้ Card ปรับขนาดเองตามหน้าจอ */
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+/* ✅ ส่วนที่เคยทำให้เลื่อนไม่ได้ (ลบ overflow-y: auto ซ้อนออก) */
+.report-page {
+  width: 100%;
+  height: auto; /* เปลี่ยนจาก 100% */
+  min-height: 100vh;
+}
+.grid-2, .table-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr; /* ปรับสัดส่วนตามต้องการ */
+  gap: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+/* ✅ แก้ไขความสูงของ Chart Section */
+.chart-section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ สำหรับกราฟที่บังคับกว้าง (ResponsiveContainer จะจัดการให้เองถ้าแก้ตรงนี้) */
+.chart-box {
+  width: 100%;
+  height: 350px;
+  min-width: unset; /* ลบค่าคงที่ออก */
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .admin-content {
+    padding: 25px;
+  }
+  .table-row,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    display: none;
+  }
+  .admin-content {
+    padding: 18px;
+  }
+}

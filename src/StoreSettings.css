@@ -1,0 +1,266 @@
+:root {
+  --brand: #ff6b98;
+  --text: #1f2937;
+  --muted: #6b7280;
+}
+
+/* ================= PAGE ================= */
+.settings-page {
+  font-family: "Prompt", sans-serif;
+  background: #fafafa;
+  padding: 36px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin-left: 100px; /* เก็บไว้เหมือนเดิม */
+}
+
+/* ================= TITLE ================= */
+.settings-page .title {
+  color: var(--brand);
+  margin-bottom: 4px;
+}
+
+.settings-page .subtitle {
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* ================= TABS ================= */
+.settings-page .tabs {
+  display: flex;
+  gap: 8px;
+  background: #f3f4f6;
+  padding: 4px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  max-width: 620px;
+}
+
+.settings-page .tabs button {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--muted);
+  transition: 0.25s;
+}
+
+.settings-page .tabs button.active {
+  background: #fff;
+  color: var(--brand);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* ================= CONTENT ================= */
+.settings-page .tab-area {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: calc(100vh - 240px);
+  padding-right: 6px;
+}
+
+/* ================= CARD ================= */
+.settings-page .card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+.settings-page .card h3 {
+  color: var(--text);
+  margin-bottom: 18px;
+}
+
+/* ================= FORM GRID ================= */
+.settings-page .form-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.settings-page .col-1,
+.settings-page .col-2 {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* ================= FORM ================= */
+.settings-page label {
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.settings-page input,
+.settings-page textarea,
+.settings-page select {
+  width: 550px; /* ค่าเดิม */
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-family: "Prompt";
+  background: #f9fafb;
+}
+
+.settings-page textarea {
+  resize: none;
+  height: 60px;
+}
+
+.settings-page .row {
+  display: flex;
+  gap: 12px;
+}
+
+/* ================= TEAM ================= */
+.settings-page .team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-page .team-item {
+  background: #f9fafb;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-page .badge {
+  background: #111827;
+  color: white;
+  border-radius: 8px;
+  padding: 4px 10px;
+}
+
+.settings-page .badge.manager {
+  background: var(--brand);
+}
+
+.settings-page .btn-add {
+  margin-top: 10px;
+  border: 1px dashed var(--brand);
+  border-radius: 10px;
+  padding: 10px;
+  background: none;
+  color: var(--brand);
+  cursor: pointer;
+}
+
+/* ================= PAYMENT ================= */
+.settings-page .switch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.settings-page .switch-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text);
+}
+
+/* ================= NOTIFY ================= */
+.settings-page .notify-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-page .notify-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text);
+}
+
+/* ================= SWITCH ================= */
+.settings-page .switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+}
+
+.settings-page .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.settings-page .slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #e5e7eb;
+  border-radius: 34px;
+  transition: 0.3s;
+}
+
+.settings-page .slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.settings-page .switch input:checked + .slider {
+  background-color: var(--brand);
+}
+
+.settings-page .switch input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+/* ================= BUTTONS ================= */
+.settings-page .actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.settings-page .btn-save {
+  background: var(--brand);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.settings-page .btn-reset {
+  background: #f3f4f6;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

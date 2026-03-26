@@ -1,0 +1,223 @@
+/* HelpCenter.css */
+:root {
+  --cream:#fffefe;
+  --dark: #2D2D2D;
+  --gray: #888;
+}
+
+.hc-luxury {
+  background-color: var(--cream);
+  color: var(--dark);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.hc-container-v2 {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Hero Section */
+.hc-hero-v2 {
+  padding: 140px 20px 80px 20px;
+  text-align: center;
+}
+
+.hc-label {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--gray);
+  display: block;
+  margin-bottom: 20px;
+}
+
+.hc-main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 8vw, 50px);
+  line-height: 1;
+  font-weight: 400;
+  margin-bottom: 50px;
+}
+
+.hc-main-title em {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hc-search-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  border-bottom: 1px solid var(--dark);
+  padding: 10px 0;
+}
+
+.hc-search-wrapper input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  padding: 10px;
+  outline: none;
+  font-family: 'Playfair Display', serif;
+}
+
+.hc-search-wrapper button {
+  background: transparent;
+  border: none;
+  letter-spacing: 2px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Service Cards */
+.hc-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.hc-service-card {
+  position: relative;
+  background: #fff;
+  padding: 60px 40px;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+.hc-bg-text {
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  font-size: 150px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: #f9f9f9;
+  z-index: 0;
+}
+
+.hc-card-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.hc-icon { font-size: 40px; display: block; margin-bottom: 20px; }
+
+.hc-service-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.hc-service-card p {
+  font-size: 14px;
+  color: var(--gray);
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.hc-link {
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: var(--dark);
+  text-decoration: none;
+  border-bottom: 1px solid var(--dark);
+  padding-bottom: 4px;
+}
+
+/* Topics Section */
+.hc-topics-section {
+  padding: 120px 0;
+  background-color: #ffffff;
+  margin-top: 100px;
+}
+
+.hc-flex-header {
+  display: flex;
+  gap: 100px;
+  align-items: flex-start;
+}
+
+.hc-side-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 120px;
+  line-height: 0.8;
+  margin: 0;
+  color: rgba(59, 59, 59, 0.16);
+}
+
+.hc-topics-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+.hc-topic-item {
+  text-decoration: none;
+  color: var(--dark);
+  display: block;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding-bottom: 20px;
+}
+
+.hc-topic-item span {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+}
+
+.hc-topic-item small {
+  font-size: 13px;
+  color: var(--gray);
+}
+
+/* Contact Banner */
+.hc-contact-banner {
+  padding: 120px 20px;
+  text-align: center;
+}
+
+.hc-banner-box {
+  border: 1px solid var(--dark);
+  padding: 80px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hc-banner-box h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 50px;
+  margin: 20px 0 40px 0;
+}
+
+.hc-contact-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.hc-contact-links a { text-decoration: none; color: var(--dark); }
+
+.hc-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--dark);
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .hc-flex-header { flex-direction: column; gap: 40px; }
+  .hc-side-title { font-size: 80px; }
+  .hc-topics-grid { grid-template-columns: 1fr; }
+}

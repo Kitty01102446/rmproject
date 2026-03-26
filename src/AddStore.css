@@ -1,0 +1,348 @@
+/* --- Root & Layout Config --- */
+:root {
+  --ink-black: #111111;
+  --soft-gray: #7a7a7a;
+  --bg-cream: #faf9f6; /* สีขาวนวลแบบกระดาษนิตยสาร */
+  --accent-pink: #ffc9e4;
+}
+
+.ag-root {
+  background-color: var(--bg-cream);
+  min-height: 100vh;
+  font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+}
+
+.container-1450 {
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+
+/* --- Editorial Header --- */
+.ag-header-editorial {
+  border-bottom: 2px solid var(--ink-black);
+  padding-bottom: 30px;
+  margin-bottom: 60px;
+  text-align: left;
+  padding-top: 10px;
+}
+
+.editorial-tag {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--soft-gray);
+  display: block;
+  margin-bottom: 10px;
+  padding-bottom: 40px;
+}
+
+/* --- Main Grid Layout --- */
+.ag-main-layout {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+/* --- Sidebar Preview (Sticky) --- */
+.ag-sidebar-preview {
+  position: sticky;
+  top: 40px;
+}
+
+.preview-sticky-wrapper .search-card-editorial {
+  box-shadow: 20px 20px 0px var(--ink-black); /* เงาแบบคมชัดสไตล์ Editorial */
+  transition: 0.3s;
+}
+
+.helper-note {
+  margin-top: 20px;
+  padding: 20px;
+  border-left: 1px solid var(--ink-black);
+  font-size: 13px;
+  color: var(--soft-gray);
+  line-height: 1.6;
+}
+
+/* --- Form Section --- */
+.ag-form-container .form-wrapper {
+  background: #fff;
+  padding: 60px !important;
+  border: 1px solid var(--ink-black);
+  box-shadow: 15px 15px 0px rgba(0,0,0,0.03);
+}
+
+.form-section {
+  margin-bottom: 80px;
+}
+.st-content{
+  padding-top: 40px;
+}
+.section-form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: var(--ink-black);
+  margin-bottom: 40px;
+  position: relative;
+  font-weight: 300;
+}
+
+.section-form-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: var(--ink-black);
+}
+
+.section-flex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 30px;
+}
+
+/* --- Input Groups --- */
+/* ใช้กับ Basic Details เท่านั้น */
+.form-section .editorial-form-grid {
+  row-gap: 28px;   /* 👈 จาก 40px → 28px */
+  column-gap: 30px;
+}
+
+
+.input-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.input-group label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  color: var(--soft-gray);
+  font-weight: 600;
+}
+
+.input-group input, 
+.input-group select {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
+  font-size: 16px;
+  background: transparent;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-bottom-color: var(--ink-black);
+}
+
+/* ใช้ของเดิมคุณได้เลย */
+.input-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.input-group label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  color: var(--soft-gray);
+  font-weight: 600;
+}
+
+.input-group input, 
+.input-group select {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
+  font-size: 16px;
+  background: transparent;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-bottom-color: var(--ink-black);
+}
+
+/* ✅ เพิ่ม textarea ให้สไตล์เดียวกับ input/select */
+.input-group textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 6px;
+
+  font-size: 16px;
+  line-height: 1.4;
+
+  padding: 0 0 2px 0;   /* เส้นชิดตัวอักษร */
+  margin-top: 0;       /* ❌ ไม่ต้องดันเพิ่มแล้ว */
+
+  background: transparent;
+  outline: none;
+  resize: none;
+  min-height: 22px;
+}
+
+
+.input-group textarea:focus {
+  border-bottom-color: var(--ink-black);
+}
+
+.input-group textarea::placeholder{
+  color: rgba(0,0,0,.25);
+}
+
+
+/* --- Service Items --- */
+.svc-entry-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  padding: 25px;
+  margin-bottom: 15px;
+  background: #fdfcf9;
+  border: 1px solid #f0f0f0;
+  transition: 0.3s;
+}
+
+.svc-entry-row:hover {
+  border-color: var(--ink-black);
+  background: #fff;
+}
+
+.del-svc-btn {
+  background: transparent;
+  color: #ff4d4d;
+  border: 1px solid #ff4d4d;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.del-svc-btn:hover {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+.editorial-link-btn {
+  background: var(--ink-black);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.editorial-link-btn:hover {
+  background: var(--soft-gray);
+}
+
+/* --- Upload Area & Thumbs --- */
+.ag-upload-area {
+  border: 1px dashed var(--ink-black);
+  padding: 60px 20px;
+  text-align: center;
+  background: #fdfcf9;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.upload-content p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.upload-content span {
+  font-size: 12px;
+  color: var(--soft-gray);
+}
+
+.ag-thumbs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.thumb-item {
+  position: relative;
+  aspect-ratio: 1/1;
+  border: 1px solid var(--ink-black);
+}
+
+.thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-thumb {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--ink-black);
+  color: #fff;
+  border: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+/* --- Footer Button --- */
+.full-btn {
+  width: 100%;
+  padding: 25px !important;
+  background: var(--ink-black);
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.full-btn:hover {
+  background: var(--soft-gray);
+  letter-spacing: 6px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1200px) {
+  .ag-main-layout {
+    grid-template-columns: 1fr;
+  }
+  .ag-sidebar-preview {
+    position: relative;
+    top: 0;
+    margin-bottom: 50px;
+  }
+  .ag-sidebar-preview .search-card-editorial {
+    max-width: 450px;
+    margin: 0 auto;
+  }
+}

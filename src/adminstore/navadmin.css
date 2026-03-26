@@ -1,0 +1,61 @@
+.admin-root {
+    display: flex;
+    height: 100vh; /* ✅ fix ความสูงเต็มจอ */
+    overflow: hidden; /* ✅ ปิดการ scroll ทั้งหน้า */
+    background: #f7f7f7;
+    font-family: "Prompt", sans-serif;
+  }
+  
+  /* ===== Sidebar ===== */
+  .sidebar {
+    width: 240px;
+    background: #1f2c3a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    position: fixed; /* ✅ ตรึง sidebar */
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+  
+  .sidebar .logo {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .sidebar .menu {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar .menu a {
+    color: #000000;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-bottom: 4px;
+    transition: 0.25s;
+  }
+  
+  .sidebar .menu a.active,
+  .sidebar .menu a:hover {
+    background: #ff6b98;
+    color: white;
+  }
+  
+  /* ===== Dashboard ===== */
+  .dashboard {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px; /* ✅ ขยับให้พ้น sidebar */
+    height: 100vh;
+    overflow: hidden; /* ✅ ปิดการเลื่อน */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  
