@@ -1,5 +1,5 @@
-const API = "http://localhost:5010";
 import axios from "axios";
+const API = "http://localhost:5010";
 
 // ===============================
 // GET SERVICE BY STORE

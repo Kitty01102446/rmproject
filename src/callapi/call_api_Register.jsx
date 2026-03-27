@@ -1,6 +1,6 @@
+import axios from "axios";
 // let api = "http://127.0.0.1:8000";
 let api = "http://localhost:5010";
-import axios from "axios";
 
 /* =========================================================
    LOGIN (ใช้จริงกับ backend)
@@ -103,5 +103,3 @@ export const RegisterUser = async (userData) => {
     throw error;  // ถ้ามีข้อผิดพลาด
   }
 };
-
-
