@@ -1,5 +1,7 @@
 import axios from "axios";
-const API = "http://localhost:5010";
+
+// ✅ เปลี่ยนตรงนี้
+const API = "https://backend-gold-kappa-26.vercel.app";
 
 // ===============================
 // GET SERVICE BY STORE

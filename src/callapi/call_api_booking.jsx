@@ -1,9 +1,10 @@
 import axios from "axios";
-let api = "http://localhost:5010";
+
+// ✅ เปลี่ยนตรงนี้
+let api = "https://backend-gold-kappa-26.vercel.app";
 
 /* =========================================================
-   CREATE BOOKING  ✅ (อันที่ขาด)
-   POST /booking
+   CREATE BOOKING
 ========================================================= */
 export async function createBooking(payload) {
   try {
@@ -11,9 +12,7 @@ export async function createBooking(payload) {
       `${api}/booking`,
       payload,
       {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       }
     );
 
@@ -41,47 +40,31 @@ export async function updateUserById(userId, payload) {
    GET USER BY ID
 ========================================================= */
 export async function getUserById(userId) {
-  try {
-    const response = await axios.get(`${api}/users/${userId}`, {
-      headers: { "Content-Type": "application/json" },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axios.get(`${api}/users/${userId}`);
+  return response.data;
 }
 
 /* =========================================================
    GET BOOKINGS
 ========================================================= */
 export async function getBookings() {
-  try {
-    const response = await axios.get(`${api}/booking`, {
-      headers: { "Content-Type": "application/json" },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axios.get(`${api}/booking`);
+  return response.data;
 }
+
 /* =========================================================
-   GET BOOKINGS Dashboard
+   GET STORE BOOKINGS
 ========================================================= */
-
 export async function getStoreBookings(storeId) {
-  try {
-    const response = await axios.get(
-      `${api}/booking/store/${storeId}`,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axios.get(
+    `${api}/booking/store/${storeId}`
+  );
+  return response.data;
 }
 
+/* =========================================================
+   GET ALERTS
+========================================================= */
 export async function getAlerts(storeId) {
   const response = await axios.get(
     `${api}/booking/alerts/${storeId}`
@@ -89,12 +72,12 @@ export async function getAlerts(storeId) {
   return response.data;
 }
 
-
-
-
+/* =========================================================
+   GET SCHEDULE (🔥 แก้ตรงนี้ด้วย)
+========================================================= */
 export async function getScheduleByDate(storeId, date) {
   const response = await axios.get(
-    `http://localhost:5010/schedule/${storeId}/${date}`
+    `${api}/schedule/${storeId}/${date}`
   );
   return response.data;
 }
