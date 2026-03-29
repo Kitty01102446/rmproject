@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { getClick_log } from "./callapi/call_api_home.jsx";
 import "./Home2.css";
 
+const IMAGE_BASE_URL = "https://backend-gold-kappa-26.vercel.app/static/images";
+
 export default function Home2() {
   const [searchArea, setSearchArea] = useState("");
   const [searchDate, setSearchDate] = useState("");
@@ -182,14 +184,13 @@ export default function Home2() {
               <article className="st-card-luxury" key={index}>
                 <Link to="/AllStores" style={{ textDecoration: "none", color: "inherit" }}>
                   <div className="st-img-wrapper">
-                    <img
-                      src={
-                        p.image
-                          ? `http://127.0.0.1:5010/static/images/${p.image}`
-                          : "/Nailshop/placeholder.jpg"
-                      }
-                      alt={p.store_name}
-                    />
+                      <img
+                        src={p.image ? `${IMAGE_BASE_URL}/${p.image}` : "/Nailshop/placeholder.jpg"}
+                        alt={p.store_name}
+                        onError={(e) => {
+                          e.currentTarget.src = "/Nailshop/placeholder.jpg";
+                        }}
+                      />
                     <span className="badge-luxury">HOT</span>
                   </div>
                   <div className="st-content">

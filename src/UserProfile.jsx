@@ -8,6 +8,8 @@ import { getUserById, updateUserById, getUserBookings } from "./callapi/call_api
 import { getStoreByUser } from "./callapi/call_api_userprofile.jsx";
 import { useLanguage } from "./i18n.jsx";
 
+const IMAGE_BASE_URL = "https://backend-gold-kappa-26.vercel.app/static/images";
+
 export default function UserProfile() {
   const { t } = useLanguage();
   const navigate = useNavigate();
@@ -277,8 +279,11 @@ export default function UserProfile() {
                 favoriteStores.map((s) => (
                   <div className="fav-card" key={s.store_id}>
                     <img
-                      src={`http://127.0.0.1:5010/static/images/${s.image}`}
+                      src={s.image ? `${IMAGE_BASE_URL}/${s.image}` : "/Nailshop/placeholder.jpg"}
                       alt={s.store_name}
+                      onError={(e) => {
+                        e.currentTarget.src = "/Nailshop/placeholder.jpg";
+                      }}
                     />
                     <div className="fav-info">
                       <h4>{s.store_name}</h4>

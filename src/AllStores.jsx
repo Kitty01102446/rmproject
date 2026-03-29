@@ -8,6 +8,7 @@ import "./AllStores.css";
 import { useLanguage } from "./i18n.jsx";
 
 const PER_PAGE = 8;
+const IMAGE_BASE_URL = "https://backend-gold-kappa-26.vercel.app/static/images";
 
 export default function AllStores() {
   const { language, t } = useLanguage();
@@ -142,7 +143,13 @@ export default function AllStores() {
               data-aos-delay={index * 100}
             >
               <div className="ag-card-img">
-                <img src={`http://127.0.0.1:5010/static/images/${s.image}`} alt={s.store_name} />
+                <img
+                  src={s.image ? `${IMAGE_BASE_URL}/${s.image}` : "/Nailshop/placeholder.jpg"}
+                  alt={s.store_name}
+                  onError={(e) => {
+                    e.currentTarget.src = "/Nailshop/placeholder.jpg";
+                  }}
+                />
               </div>
 
               <div className="ag-card-content">

@@ -6,6 +6,8 @@ import "aos/dist/aos.css";
 import "./Home.css";
 import { useLanguage } from "./i18n.jsx";
 
+const IMAGE_BASE_URL = "https://backend-gold-kappa-26.vercel.app/static/images";
+
 export default function Home() {
   const { language, t } = useLanguage();
   // 1. State สำหรับค้นหา
@@ -187,7 +189,13 @@ export default function Home() {
               <article className="st-card-luxury" key={index} data-aos="fade-up" data-aos-delay={index * 100}>
                 <Link to="/AllStores" style={{ textDecoration: 'none', color: 'inherit' }}>
                   <div className="st-img-wrapper">
-                    <img src={p.image ? `http://127.0.0.1:5010/static/images/${p.image}` : "/Nailshop/placeholder.jpg"} alt={p.store_name} />
+                    <img
+                      src={p.image ? `${IMAGE_BASE_URL}/${p.image}` : "/Nailshop/placeholder.jpg"}
+                      alt={p.store_name}
+                      onError={(e) => {
+                        e.currentTarget.src = "/Nailshop/placeholder.jpg";
+                      }}
+                    />
                     <span className="badge-luxury">HOT</span>
                   </div>
                   <div className="st-content">
