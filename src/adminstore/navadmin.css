@@ -2,15 +2,15 @@
     display: flex;
     height: 100vh; /* ✅ fix ความสูงเต็มจอ */
     overflow: hidden; /* ✅ ปิดการ scroll ทั้งหน้า */
-    background: #f7f7f7;
+    background: linear-gradient(180deg, #fffafd, #fff1f6);
     font-family: "Prompt", sans-serif;
   }
   
   /* ===== Sidebar ===== */
   .sidebar {
     width: 240px;
-    background: #1f2c3a;
-    color: white;
+    background: linear-gradient(180deg, #fff7fb 0%, #ffeef5 100%);
+    color: #7a5263;
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1rem;
@@ -24,6 +24,7 @@
     font-weight: 600;
     font-size: 1.2rem;
     margin-bottom: 2rem;
+    color: #c46f91;
   }
   
   .sidebar .menu {
@@ -32,9 +33,9 @@
   }
   
   .sidebar .menu a {
-    color: #000000;
+    color: #7a5263;
     padding: 0.6rem 1rem;
-    border-radius: 8px;
+    border-radius: 14px;
     text-decoration: none;
     margin-bottom: 4px;
     transition: 0.25s;
@@ -42,20 +43,153 @@
   
   .sidebar .menu a.active,
   .sidebar .menu a:hover {
-    background: #ff6b98;
+    background: linear-gradient(135deg, #efa3c0, #d9789c);
     color: white;
+    box-shadow: 0 12px 28px rgba(217, 122, 156, 0.22);
   }
   
   /* ===== Dashboard ===== */
-  .dashboard {
+.dashboard {
     flex: 1;
-    padding: 2rem;
+    padding: 36px 56px 48px;
     margin-left: 240px; /* ✅ ขยับให้พ้น sidebar */
     height: 100vh;
-    overflow: hidden; /* ✅ ปิดการเลื่อน */
+    overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
   }
+
+.dashboard::-webkit-scrollbar,
+.dashboard *::-webkit-scrollbar {
+  display: none;
+}
+
+.dashboard,
+.dashboard * {
+  scrollbar-width: none;
+}
+
+.dashboard > .manage,
+.dashboard > .schedule-root,
+.dashboard > .promotion-page,
+.dashboard > .report-page,
+.dashboard > .settings-page,
+.dashboard > .gallery-page,
+.dashboard > .inventory-page {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  background: transparent !important;
+  box-sizing: border-box;
+}
+
+.dashboard > .manage .header,
+.dashboard > .schedule-root .header,
+.dashboard > .promotion-page .header,
+.dashboard > .report-page .header,
+.dashboard > .settings-page .title,
+.dashboard > .settings-page .subtitle {
+  margin-left: 0 !important;
+}
+
+.dashboard > .manage,
+.dashboard > .schedule-root,
+.dashboard > .promotion-page,
+.dashboard > .report-page,
+.dashboard > .settings-page {
+  overflow: visible !important;
+}
+
+.dashboard > .manage {
+  margin-left: 0 !important;
+}
+
+.dashboard > .manage .service-card,
+.dashboard > .promotion-page .table-wrapper,
+.dashboard > .settings-page .card,
+.dashboard > .report-page .chart-section,
+.dashboard > .report-page .table-card,
+.dashboard > .report-page .card {
+  width: 100% !important;
+  margin-left: 0 !important;
+}
+
+.dashboard > .manage .toolbar,
+.dashboard > .manage .service-table,
+.dashboard > .manage .search-box,
+.dashboard > .manage .filters,
+.dashboard > .promotion-page .table-wrapper,
+.dashboard > .report-page .report {
+  max-width: 100%;
+}
+
+.dashboard > .schedule-root .schedule-grid {
+  margin-left: 0 !important;
+  grid-template-columns: minmax(280px, 1.3fr) minmax(240px, 1fr) minmax(240px, 1fr);
+}
+
+.dashboard > .report-page {
+  margin-left: 0 !important;
+}
+
+.dashboard > .report-page .report {
+  min-width: 0 !important;
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+.dashboard > .report-page .summary-cards,
+.dashboard > .report-page .table-row,
+.dashboard > .report-page .chart-box,
+.dashboard > .report-page .chart-box canvas {
+  min-width: 0 !important;
+}
+
+.dashboard > .settings-page {
+  margin-left: 0 !important;
+  max-width: 1320px !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.dashboard > .settings-page .tab-area {
+  max-height: none !important;
+  overflow: visible !important;
+  padding-right: 0 !important;
+}
+
+.dashboard > .settings-page .title,
+.dashboard > .settings-page .subtitle,
+.dashboard > .settings-page .tabs,
+.dashboard > .settings-page .card {
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.dashboard > .settings-page input,
+.dashboard > .settings-page textarea,
+.dashboard > .settings-page select {
+  width: 100% !important;
+}
+
+@media (max-width: 1024px) {
+  .dashboard {
+    margin-left: 240px;
+    padding: 28px 24px 40px;
+    align-items: stretch;
+  }
+
+  .dashboard > .schedule-root .schedule-grid,
+  .dashboard > .report-page .table-row {
+    grid-template-columns: 1fr !important;
+  }
+}
   
   

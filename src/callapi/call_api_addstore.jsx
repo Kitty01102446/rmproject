@@ -1,8 +1,9 @@
+// แก้ไขไฟล์ service (เช่น storeService.js)
 import axios from 'axios';
 
-const api = "https://backend-gold-kappa-26.vercel.app";
-
-// สมัครร้านค้า
+// const api = "http://localhost:5010"; // ตรวจสอบว่า URL ตรงกับ Backend ของคุณแ
+const api ="https://backend-gold-kappa-26.vercel.app/"
+// สำหรับสมัครร้านค้าใหม่ (ใช้ชื่อนี้จะสื่อสารเข้าใจง่าย)
 export async function registerStore(payload) {
   try {
     const response = await axios.post(`${api}/register-store`, payload, {
@@ -15,14 +16,14 @@ export async function registerStore(payload) {
   }
 }
 
-// ดึงข้อมูลร้านค้า
+// สำหรับดึงข้อมูลร้านค้า (รองรับทั้งดูทั้งหมด และดูเฉพาะของตัวเอง)
 export async function getStores(userId = null) {
   try {
     const url = userId ? `${api}/stores?user_id=${userId}` : `${api}/stores`;
     const response = await axios.get(url);
     return response.data;
   } catch (error) {
-    console.error("Error fetching store:", error?.response?.data || error.message);
+    console.error("Error registering store:", error?.response?.data || error.message);
     throw error;
   }
 }

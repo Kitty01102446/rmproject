@@ -5,10 +5,12 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import AOS from "aos"; // 1. Import AOS
 import "aos/dist/aos.css"; // 2. Import CSS
 import "./AllStores.css";
+import { useLanguage } from "./i18n.jsx";
 
 const PER_PAGE = 8;
 
 export default function AllStores() {
+  const { language, t } = useLanguage();
   const { search } = useLocation();
   const params = useMemo(() => new URLSearchParams(search), [search]);
 
@@ -99,13 +101,13 @@ export default function AllStores() {
         </div>
 
         <div className="hero-center-content" data-aos="zoom-in" data-aos-duration="1500">
-          <span className="hero-tagline">the atelier tagline</span>
+          <span className="hero-tagline">{t("allstores_tagline")}</span>
           <h1 className="hero-title">ALL STORE <br />NAILS</h1>
           <p className="hero-desc">
-            JOIN THE 7 DAY MIRACLE PROGRAM <br />
-            RECOVERING TONE AND ELASTICITY OF YOUR NAILS.
+            {t("allstores_desc_1")} <br />
+            {t("allstores_desc_2")}
           </p>
-          <button className="ag-btn-sharp">VIEW ALL</button>
+          <button className="ag-btn-sharp">{t("allstores_view_all")}</button>
         </div>
       </section>
 
@@ -113,13 +115,13 @@ export default function AllStores() {
       <div className="ag-filter-bar" data-aos="fade-up">
         <div className="ag-container">
           <div className="ag-filter-group">
-            <button className={area === "" ? "active" : ""} onClick={() => setArea("")}>All Store</button>
+            <button className={area === "" ? "active" : ""} onClick={() => setArea("")}>{t("allstores_areas_all")}</button>
             {["สยาม", "อารีย์", "ขอนแก่น", "ลาดพร้าว"].map(a => (
               <button key={a} className={area === a ? "active" : ""} onClick={() => setArea(a)}>{a}</button>
             ))}
           </div>
           <div className="ag-search-wrapper">
-            <input type="text" placeholder="Search studio..." value={q} onChange={(e) => setQ(e.target.value)} />
+            <input type="text" placeholder={t("allstores_search")} value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
         </div>
       </div>
@@ -127,8 +129,8 @@ export default function AllStores() {
       {/* Main Content */}
       <main className="ag-container">
         <div className="ag-section-title" data-aos="fade-right">
-          <h2>Our Store</h2>
-          <Link to="#" className="view-all">View All Store</Link>
+          <h2>{t("allstores_section_title")}</h2>
+          <Link to="#" className="view-all">{t("allstores_view_all_store")}</Link>
         </div>
 
         <div className="ag-grid">
@@ -164,7 +166,7 @@ export default function AllStores() {
                   <span className="price">฿{Number(s.price).toLocaleString()}</span>
                 </div>
                 <Link to={`/store2/${s.store_id}`} className="ag-add-btn">
-                  BOOKING
+                  {t("allstores_booking")}
                 </Link>
               </div>
             </div>
@@ -187,17 +189,17 @@ export default function AllStores() {
           <div className="offer-image" data-aos="zoom-out-right" data-aos-delay="200">
             <img src="https://i.pinimg.com/736x/4b/c1/5b/4bc15bdb3aabb81077b49fcc066efb41.jpg" alt="special offer" />
             <div className="offer-text-box">
-              <h3>Special Offer</h3>
+              <h3>{t("allstores_special_offer")}</h3>
               <p>Nail Art Session</p>
-              <button className="learn-more">Learn More</button>
+              <button className="learn-more">{t("allstores_learn_more")}</button>
             </div>
           </div>
           <div className="offer-content" data-aos="fade-left" data-aos-delay="400">
-            <h2>Get Discount <strong>25% Off</strong></h2>
-            <p>โปรโมชั่นพิเศษสำหรับการจองผ่านระบบออนไลน์วันนี้ รับส่วนลดทันทีสำหรับทุกบริการ</p>
+            <h2>{language === "th" ? <>รับส่วนลด <strong>25%</strong></> : <>Get Discount <strong>25% Off</strong></>}</h2>
+            <p>{t("allstores_discount_desc")}</p>
             <div className="subscribe-box">
               <input type="email" placeholder="Email Address" />
-              <button>Subscribe</button>
+              <button>{t("allstores_subscribe")}</button>
             </div>
           </div>
         </div>

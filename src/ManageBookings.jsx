@@ -9,6 +9,8 @@ export default function ManageBookings() {
   const [search, setSearch] = useState("");
   const [selectedBooking, setSelectedBooking] = useState(null);
   const { storeId } = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const bookingsPerPage = 5;
 
   const [bookings, setBookings] = useState([]);
 
@@ -22,6 +24,7 @@ export default function ManageBookings() {
         `http://localhost:5010/booking/store/${storeId}`
       );
       setBookings(res.data);
+      setCurrentPage(1);
     } catch (err) {
       console.error("โหลดการจองผิดพลาด", err);
     }
@@ -63,11 +66,20 @@ export default function ManageBookings() {
   
     return "status pending";
   };
+
+  const filteredBookings = bookings.filter((b) =>
+    (b.customer_name || "").toLowerCase().includes(search.toLowerCase()) ||
+    String(b.booking_id).includes(search)
+  );
+
+  const totalPages = Math.max(1, Math.ceil(filteredBookings.length / bookingsPerPage));
+  const startIndex = (currentPage - 1) * bookingsPerPage;
+  const visibleBookings = filteredBookings.slice(startIndex, startIndex + bookingsPerPage);
   
 
   return (
-    <div className="admin-root">
-      <main className="manage">
+    <>
+      <section className="manage manage-bookings-page">
         <div className="header">
           <div>
             <h1>การจอง</h1>
@@ -83,7 +95,10 @@ export default function ManageBookings() {
                 type="text"
                 placeholder="ค้นหาการจองหรือชื่อลูกค้า..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setCurrentPage(1);
+                }}
               />
             </div>
           </div>
@@ -102,14 +117,7 @@ export default function ManageBookings() {
               </tr>
             </thead>
             <tbody>
-              {bookings
-                .filter((b) =>
-                  (b.customer_name || "")
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
-                  String(b.booking_id).includes(search)
-                )
-                .map((b) => (
+              {visibleBookings.map((b) => (
                   <tr key={b.booking_id}>
                     <td>{b.booking_id}</td>
                     <td>{b.customer_name}</td>
@@ -155,8 +163,32 @@ export default function ManageBookings() {
                 ))}
             </tbody>
           </table>
+
+          {filteredBookings.length > bookingsPerPage && (
+            <div className="pagination-bar">
+              <button
+                className="page-btn"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              >
+                ก่อนหน้า
+              </button>
+
+              <div className="page-info">
+                หน้า {currentPage} / {totalPages}
+              </div>
+
+              <button
+                className="page-btn"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              >
+                ถัดไป
+              </button>
+            </div>
+          )}
         </div>
-      </main>
+      </section>
 
       {/* Modal รายละเอียดการจอง */}
       {selectedBooking &&
@@ -194,6 +226,6 @@ export default function ManageBookings() {
           </div>,
           document.body
         )}
-    </div>
+    </>
   );
 }

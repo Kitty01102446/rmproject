@@ -8,22 +8,17 @@ import "./StoreDashboard.css";
 import { useParams } from "react-router-dom";
 import { getStoreBookings, getAlerts } from "./callapi/call_api_booking.jsx";
 import { getTopServices, getMonthlyIncomeByYear, getTopServicess } from "./callapi/call_api_service.jsx";
+import { getReviewsByStore } from "./callapi/call_api_store2.jsx";
 
 
 export default function StoreDashboard() {
 
   const { storeId } = useParams();
   console.log("Store ID:", storeId);
-  // Data สำหรับ Dashboard
-  const data = [
-    { name: "เพ้นท์เล็บเจล", value: 32 },
-    { name: "ต่อเล็บ", value: 28 },
-    { name: "สปาเท้า", value: 25 },
-    { name: "มาส์กมือ", value: 21 },
-    { name: "เพ้นท์ลายตามสั่ง", value: 20 },
-  ];
-
   const [bookings, setBookings] = useState([]);
+  const [bookingPage, setBookingPage] = useState(1);
+  const bookingsPerPage = 7;
+  const [reviews, setReviews] = useState([]);
   useEffect(() => {
     if (!storeId) return;
 
@@ -32,12 +27,29 @@ export default function StoreDashboard() {
         const data = await getStoreBookings(storeId);
         console.log("Store bookings:", data);
         setBookings(data);
+        setBookingPage(1);
       } catch (err) {
         console.error("Error fetching bookings:", err);
       }
     };
 
     fetchBookings();
+  }, [storeId]);
+
+  useEffect(() => {
+    if (!storeId) return;
+
+    const fetchReviews = async () => {
+      try {
+        const data = await getReviewsByStore(storeId);
+        setReviews(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+        setReviews([]);
+      }
+    };
+
+    fetchReviews();
   }, [storeId]);
 
   const [topServices, setTopServices] = useState([]);
@@ -147,10 +159,81 @@ export default function StoreDashboard() {
   
     fetchTopServicess();
   }, [storeId]);
+
+  const totalBookingPages = Math.max(1, Math.ceil(bookings.length / bookingsPerPage));
+  const visibleBookings = bookings.slice(
+    (bookingPage - 1) * bookingsPerPage,
+    bookingPage * bookingsPerPage
+  );
+
+  const parseDMY = (value) => {
+    if (!value) return null;
+    const [day, month, year] = String(value).split("/").map(Number);
+    if (!day || !month || !year) return null;
+    return new Date(year, month - 1, day);
+  };
+
+  const today = new Date();
+  const isSameDay = (date) =>
+    date &&
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear();
+
+  const isYesterday = (date) => {
+    if (!date) return false;
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+    return (
+      date.getDate() === yesterday.getDate() &&
+      date.getMonth() === yesterday.getMonth() &&
+      date.getFullYear() === yesterday.getFullYear()
+    );
+  };
+
+  const isCurrentMonth = (date) =>
+    date &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear();
+
+  const isPreviousMonth = (date) => {
+    if (!date) return false;
+    const previousMonthDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    return (
+      date.getMonth() === previousMonthDate.getMonth() &&
+      date.getFullYear() === previousMonthDate.getFullYear()
+    );
+  };
+
+  const bookingsToday = bookings.filter((booking) => isSameDay(parseDMY(booking.booking_date)));
+  const bookingsYesterday = bookings.filter((booking) => isYesterday(parseDMY(booking.booking_date)));
+  const todayRevenue = bookingsToday.reduce((sum, booking) => sum + Number(booking.total_price || 0), 0);
+  const yesterdayRevenue = bookingsYesterday.reduce((sum, booking) => sum + Number(booking.total_price || 0), 0);
+
+  const currentMonthBookings = bookings.filter((booking) => isCurrentMonth(parseDMY(booking.booking_date)));
+  const previousMonthBookings = bookings.filter((booking) => isPreviousMonth(parseDMY(booking.booking_date)));
+
+  const currentMonthCustomers = new Set(
+    currentMonthBookings.map((booking) => booking.user_id || booking.customer_name).filter(Boolean)
+  ).size;
+  const previousMonthCustomers = new Set(
+    previousMonthBookings.map((booking) => booking.user_id || booking.customer_name).filter(Boolean)
+  ).size;
+
+  const reviewAverage = reviews.length
+    ? (reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0) / reviews.length).toFixed(1)
+    : "0.0";
+
+  const formatDelta = (current, previous) => {
+    if (previous <= 0) {
+      return current > 0 ? "+100%" : "0%";
+    }
+    return `${current >= previous ? "+" : ""}${Math.round(((current - previous) / previous) * 100)}%`;
+  };
    
   return (
-    <div className="admin-root report-page">
-      <main className="dashboard report">
+    <section className="report-page">
+      <div className="report">
         {/* ===== ส่วนที่ 1: Header รายงานร้าน ===== */}
         <div className="header">
           <div>
@@ -172,23 +255,23 @@ export default function StoreDashboard() {
         <div className="stats-grid">
           <div className="card">
             <p className="label">ยอดจองวันนี้</p>
-            <h2>24</h2>
-            <span className="trend up">↑ +12% จากเมื่อวาน</span>
+            <h2>{bookingsToday.length}</h2>
+            <span className="trend up">↑ {formatDelta(bookingsToday.length, bookingsYesterday.length)} จากเมื่อวาน</span>
           </div>
           <div className="card">
             <p className="label">รายได้วันนี้</p>
-            <h2>฿18,450</h2>
-            <span className="trend up">↑ +8% จากเมื่อวาน</span>
+            <h2>฿{todayRevenue.toLocaleString()}</h2>
+            <span className="trend up">↑ {formatDelta(todayRevenue, yesterdayRevenue)} จากเมื่อวาน</span>
           </div>
           <div className="card">
             <p className="label">รีวิวเฉลี่ย</p>
-            <h2>4.8</h2>
-            <span>จาก 156 รีวิว</span>
+            <h2>{reviewAverage}</h2>
+            <span>จาก {reviews.length} รีวิว</span>
           </div>
           <div className="card">
             <p className="label">ลูกค้าใหม่เดือนนี้</p>
-            <h2>32</h2>
-            <span className="trend up">↑ +18% จากเดือนที่แล้ว</span>
+            <h2>{currentMonthCustomers}</h2>
+            <span className="trend up">↑ {formatDelta(currentMonthCustomers, previousMonthCustomers)} จากเดือนที่แล้ว</span>
           </div>
         </div>
         <select
@@ -237,8 +320,31 @@ export default function StoreDashboard() {
           </div>
 
           {/* การจองล่าสุด */}
-          <div className="card">
-            <h3>การจองล่าสุด</h3>
+          <div className="card recent-bookings-card">
+            <div className="recent-bookings-head">
+              <h3>การจองล่าสุด</h3>
+              {bookings.length > bookingsPerPage && (
+                <div className="mini-pagination">
+                  <button
+                    className="mini-page-btn"
+                    disabled={bookingPage === 1}
+                    onClick={() => setBookingPage((prev) => Math.max(prev - 1, 1))}
+                  >
+                    ก่อนหน้า
+                  </button>
+                  <span className="mini-page-info">
+                    หน้า {bookingPage}/{totalBookingPages}
+                  </span>
+                  <button
+                    className="mini-page-btn"
+                    disabled={bookingPage === totalBookingPages}
+                    onClick={() => setBookingPage((prev) => Math.min(prev + 1, totalBookingPages))}
+                  >
+                    ถัดไป
+                  </button>
+                </div>
+              )}
+            </div>
             <table className="booking-table">
               <thead>
                 <tr>
@@ -248,7 +354,7 @@ export default function StoreDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {bookings.map((b, i) => (
+                {visibleBookings.map((b, i) => (
                   <tr key={i}>
                     <td>{b.customer_name}</td>
                     <td>{b.booking_time}</td>
@@ -268,6 +374,9 @@ export default function StoreDashboard() {
                 ))}
               </tbody>
             </table>
+            {!visibleBookings.length && (
+              <div className="empty-bookings">ยังไม่มีรายการจองล่าสุด</div>
+            )}
           </div>
         </div>
 
@@ -326,7 +435,7 @@ export default function StoreDashboard() {
 
         {/* Padding ท้ายหน้าเพื่อให้ Scroll พ้นขอบ */}
         <div style={{ height: "50px" }}></div>
-      </main>
-    </div>
+      </div>
+    </section>
   );
 }

@@ -6,8 +6,10 @@ import { FiUser, FiPhone, FiMail, FiCalendar, FiClock, FiLogOut, FiEdit3 } from 
 import "./UserProfile.css";
 import { getUserById, updateUserById, getUserBookings } from "./callapi/call_api_userprofile.jsx";
 import { getStoreByUser } from "./callapi/call_api_userprofile.jsx";
+import { useLanguage } from "./i18n.jsx";
 
 export default function UserProfile() {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -160,7 +162,7 @@ export default function UserProfile() {
     return (
       <div className="loader-container">
         <div className="atelier-loader"></div>
-        <p>Loading your profile...</p>
+        <p>{t("profile_loading")}</p>
       </div>
     );
   }
@@ -179,25 +181,25 @@ export default function UserProfile() {
                 </label>
               </div>
               <button className="btn-logout-minimal" onClick={handleLogout}>
-                <FiLogOut /> Sign Out
+                <FiLogOut /> {t("profile_sign_out")}
               </button>
             </div>
 
             <div className="info-side">
-              <div className="member-tag">MEMBER PROFILE</div>
+              <div className="member-tag">{t("profile_member")}</div>
               <h1 className="profile-name">{profile.username || "Guest User"}</h1>
 
               <div className="profile-fields-grid">
-                <div className="field-group" onClick={() => setEditModal({ open: true, field: "name", label: "Nickname", value: profile.name })}>
-                  <label><FiUser /> Nickname</label>
+                <div className="field-group" onClick={() => setEditModal({ open: true, field: "name", label: t("profile_nickname"), value: profile.name })}>
+                  <label><FiUser /> {t("profile_nickname")}</label>
                   <div className="field-value">{profile.name}</div>
                 </div>
-                <div className="field-group" onClick={() => setEditModal({ open: true, field: "phone", label: "Contact Number", value: profile.phone })}>
-                  <label><FiPhone /> Contact</label>
+                <div className="field-group" onClick={() => setEditModal({ open: true, field: "phone", label: t("profile_contact"), value: profile.phone })}>
+                  <label><FiPhone /> {t("profile_contact")}</label>
                   <div className="field-value">{profile.phone}</div>
                 </div>
-                <div className="field-group full-width" onClick={() => setEditModal({ open: true, field: "email", label: "Email Address", value: profile.email })}>
-                  <label><FiMail /> Email Address</label>
+                <div className="field-group full-width" onClick={() => setEditModal({ open: true, field: "email", label: t("profile_email"), value: profile.email })}>
+                  <label><FiMail /> {t("profile_email")}</label>
                   <div className="field-value">{profile.email}</div>
                 </div>
               </div>
@@ -207,9 +209,9 @@ export default function UserProfile() {
 
         {/* Navigation Tabs */}
         <nav className="atelier-tabs">
-          <button className={`tab-item ${tab === "bookings" ? "active" : ""}`} onClick={() => setTab("bookings")}>Reservations</button>
-          <button className={`tab-item ${tab === "favorites" ? "active" : ""}`} onClick={() => setTab("favorites")}>Favorites</button>
-          <button className={`tab-item ${tab === "owner" ? "active" : ""}`} onClick={() => setTab("owner")}>Business</button>
+          <button className={`tab-item ${tab === "bookings" ? "active" : ""}`} onClick={() => setTab("bookings")}>{t("profile_reservations")}</button>
+          <button className={`tab-item ${tab === "favorites" ? "active" : ""}`} onClick={() => setTab("favorites")}>{t("profile_favorites")}</button>
+          <button className={`tab-item ${tab === "owner" ? "active" : ""}`} onClick={() => setTab("owner")}>{t("profile_business")}</button>
         </nav>
 
         {/* Content Area */}
@@ -234,7 +236,7 @@ export default function UserProfile() {
                 </div>
               )) : (
                 <div className="empty-state">
-                  <p>No upcoming reservations found.</p>
+                  <p>{t("profile_no_reservations")}</p>
                 </div>
               )}
             </div>
@@ -244,24 +246,24 @@ export default function UserProfile() {
             <div className="business-ct">
               {hasStore ? (
                 <>
-                  <h3>Your Business Dashboard</h3>
-                  <p>Manage your atelier and bookings from your dashboard.</p>
+                  <h3>{t("profile_dashboard_title")}</h3>
+                  <p>{t("profile_dashboard_desc")}</p>
                   <button
                     className="btn-atelier-primary"
                     onClick={() => navigate(`/StoreDashboard/${storeData.store_id}`)}
                   >
-                    Go to Dashboard
+                    {t("profile_go_dashboard")}
                   </button>
                 </>
               ) : (
                 <>
-                  <h3>Become a Partner</h3>
-                  <p>Showcase your atelier and reach more clients in our community.</p>
+                  <h3>{t("profile_become_partner")}</h3>
+                  <p>{t("profile_become_partner_desc")}</p>
                   <button
                     className="btn-atelier-primary"
                     onClick={() => navigate("/AddStore")}
                   >
-                    Register Your Business
+                    {t("profile_register_business")}
                   </button>
                 </>
               )}
@@ -281,15 +283,18 @@ export default function UserProfile() {
                     <div className="fav-info">
                       <h4>{s.store_name}</h4>
                       <span>฿{Number(s.price).toLocaleString()}</span>
-                      <button onClick={() => navigate(`/store2/${s.store_id}`)}>
-                        Book Now
+                      <button
+                        className="fav-book-btn"
+                        onClick={() => navigate(`/store2/${s.store_id}`)}
+                      >
+                        {t("profile_book_now")}
                       </button>
                     </div>
                   </div>
                 ))
               ) : (
                 <div className="empty-state">
-                  <p>No favorites yet. Start curating your atelier ✨</p>
+                  <p>{t("profile_no_favorites")}</p>
                 </div>
               )}
             </div>
@@ -302,8 +307,8 @@ export default function UserProfile() {
       {editModal.open && (
         <div className="atelier-modal-overlay" onClick={() => setEditModal({ open: false })}>
           <div className="atelier-modal" onClick={e => e.stopPropagation()}>
-            <h3>Update {editModal.label}</h3>
-            <p className="modal-subtitle">Enter your new details below</p>
+            <h3>{t("profile_update")} {editModal.label}</h3>
+            <p className="modal-subtitle">{t("profile_update_subtitle")}</p>
             <input
               autoFocus
               className="atelier-input"
@@ -311,8 +316,8 @@ export default function UserProfile() {
               onChange={e => setEditModal({ ...editModal, value: e.target.value })}
             />
             <div className="modal-actions">
-              <button className="btn-atelier-primary" onClick={confirmEdit}>Save Changes</button>
-              <button className="btn-atelier-link" onClick={() => setEditModal({ open: false })}>Cancel</button>
+              <button className="btn-atelier-primary" onClick={confirmEdit}>{t("profile_save")}</button>
+              <button className="btn-atelier-link" onClick={() => setEditModal({ open: false })}>{t("profile_cancel")}</button>
             </div>
           </div>
         </div>

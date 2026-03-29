@@ -1,7 +1,7 @@
 import axios from "axios";
 // let api = "http://127.0.0.1:8000";
-let api = "https://backend-gold-kappa-26.vercel.app";
-
+// let api = "http://localhost:5010";
+const api ="https://backend-gold-kappa-26.vercel.app/"
 /* =========================================================
    LOGIN (ใช้จริงกับ backend)
    POST /login

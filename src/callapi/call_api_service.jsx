@@ -1,8 +1,8 @@
 // แก้ไขไฟล์ service (เช่น storeService.js)
 import axios from 'axios';
 
-const api = "https://backend-gold-kappa-26.vercel.app"; // ตรวจสอบว่า URL ตรงกับ Backend ของคุณ
-
+// const api = "http://localhost:5010"; // ตรวจสอบว่า URL ตรงกับ Backend ของคุณ
+const api ="https://backend-gold-kappa-26.vercel.app/"
 export async function getTopServices(storeId) {
   try {
     const response = await axios.get(

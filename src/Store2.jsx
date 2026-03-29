@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getStore_address } from "./callapi/call_api_store2.jsx";
 import { getStoreById } from "./callapi/call_api_store2.jsx"; // 2. เปลี่ยนฟังก์ชันที่ใช้ดึง
+import { getPromotionsByStore } from "./callapi/call_api_store2.jsx";
+import { getReviewsByStore } from "./callapi/call_api_store2.jsx";
 import "./Store2.css";
 
 export default function StorePage() {
@@ -10,6 +12,10 @@ export default function StorePage() {
   const [selected, setSelected] = useState(new Set());
   const [store2, setStore2] = useState(null);
   const [servicesFromApi, setServicesFromApi] = useState([]);
+  const [promoCode, setPromoCode] = useState("");
+  const [promotions, setPromotions] = useState([]);
+  const [reviews, setReviews] = useState([]);
+
 
   // รูปภาพสำรองกรณีรูปจาก API ไม่ขึ้น
   const SAMPLE_IMAGES = [
@@ -24,44 +30,74 @@ export default function StorePage() {
   useEffect(() => {
     async function fetchStoreData() {
       try {
-        // 1. ดึงข้อมูล
         const servicesResponse = await getStoreById(id);
         const addressResponse = await getStore_address(id);
+        const promoResponse = await getPromotionsByStore(id);
+        const reviewResponse = await getReviewsByStore(id);
 
-        // 🚩 Debug: ดูว่า servicesResponse หน้าตาเป็นยังไง
-        console.log("Services Raw:", servicesResponse);
-        console.log("Address Raw:", addressResponse);
-
-        // 2. จัดการข้อมูล Address (จากภาพที่ 4 addressResponse เป็น Object อยู่แล้ว)
         const addressInfo = addressResponse || {};
-
-        // 3. จัดการข้อมูล Services (ต้องเป็น Array)
         const serviceList = Array.isArray(servicesResponse) ? servicesResponse : [];
 
+        // ===== STORE + SERVICES =====
         if (serviceList.length > 0 || addressInfo.store_id) {
-          // ✅ ผสานข้อมูล: เอาตัวแรกของ serviceList มาทำเป็นข้อมูลร้านเบื้องต้น + ที่อยู่
           const baseStoreInfo = serviceList.length > 0 ? serviceList[0] : {};
           setStore2({ ...baseStoreInfo, ...addressInfo });
 
-          // ✅ สร้างเมนูบริการ
           const serviceMap = new Map();
           serviceList.forEach((r) => {
             if (r.service_id && !serviceMap.has(r.service_id)) {
               serviceMap.set(r.service_id, {
                 id: r.service_id,
                 name: r.service_name,
-                price: Number(r.price), // มั่นใจว่าเป็นตัวเลข
+                price: Number(r.price),
                 minutes: r.duration_minutes
               });
             }
           });
+
           setServicesFromApi(Array.from(serviceMap.values()));
         }
+        const formatDate = (date) => {
+          if (!date) return "-";
+          return new Date(date).toLocaleDateString("th-TH");
+        };
+        // ===== PROMOTION (🔥 ตรงนี้แหละที่ต้องอยู่ใน useEffect) =====
+        const mappedPromos = (promoResponse || []).map(p => ({
+          id: p.promo_id,
+          title: p.name,
+          detail: p.detail || "ไม่มีรายละเอียด",
+          discount: `${p.discount}% OFF`,
+          code: p.promo_code,
+          discountValue: Number(p.discount || 0),
+          typePromoId: Number(p.type_promo_id || 1),
+          period: p.start_date && p.end_date
+            ? `${formatDate(p.start_date)} - ${formatDate(p.end_date)}`
+            : "ไม่ระบุช่วงเวลา"
+        }));
+
+        setPromotions(mappedPromos);
+
+        const mappedReviews = (reviewResponse || []).map((review) => {
+          const createdAt = review.created_at ? new Date(review.created_at) : null;
+          const hasValidDate = createdAt && !Number.isNaN(createdAt.getTime());
+
+          return {
+            id: review.review_id,
+            name: review.customer_name || review.nickname || review.username || `ลูกค้า #${review.user_id}`,
+            rating: Number(review.rating || 0),
+            date: hasValidDate ? createdAt.toLocaleDateString("th-TH") : "-",
+            text: review.comment || "ไม่มีข้อความรีวิว",
+          };
+        });
+
+        setReviews(mappedReviews);
+
       } catch (err) {
         console.error("Error loading store data:", err);
       }
     }
-    if (id) { fetchStoreData(); }
+
+    if (id) fetchStoreData();
   }, [id]);
 
   const handleGoToBooking = () => {
@@ -70,7 +106,11 @@ export default function StorePage() {
     const bookingData = {
       storeId: id, // ID จาก useParams() ของหน้า Store2
       storeName: store2?.store_name || "Nail Bar",
-      services: selectedServices // เฉพาะรายการที่ผู้ใช้เลือกจริง
+      services: selectedServices, // เฉพาะรายการที่ผู้ใช้เลือกจริง
+      promoCode: normalizedPromoCode,
+      promoDiscount,
+      finalPrice,
+      promotions,
     };
 
     // บันทึกทับของเดิมทุกครั้งก่อนย้ายหน้า
@@ -80,6 +120,19 @@ export default function StorePage() {
 
   const selectedList = servicesFromApi.filter(s => selected.has(s.id));
   const totalPrice = selectedList.reduce((acc, s) => acc + s.price, 0);
+  const averageRating = reviews.length
+    ? (reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0) / reviews.length).toFixed(1)
+    : Number(store2?.avg_rating || 0).toFixed(1);
+  const normalizedPromoCode = promoCode.trim().toUpperCase();
+  const activePromotion = normalizedPromoCode
+    ? promotions.find(
+        (promo) => String(promo.code || "").trim().toUpperCase() === normalizedPromoCode
+      )
+    : null;
+  const promoDiscount = activePromotion
+    ? Math.round(totalPrice * (activePromotion.discountValue / 100))
+    : 0;
+  const finalPrice = Math.max(totalPrice - promoDiscount, 0);
 
   return (
     <div className="st-clean-root">
@@ -130,6 +183,59 @@ export default function StorePage() {
             <div className="st-map-box">
               <iframe src={mapEmbedUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy"></iframe>
             </div>
+
+            <section className="st-section-block">
+              <div className="st-section-heading-row">
+                <h2 className="st-section-title">Special Promotions</h2>
+                <span className="st-section-kicker">Offers curated for this studio</span>
+              </div>
+              <div className="st-promo-grid">
+                {promotions.map((promo) => (
+                  <article className="st-promo-card" key={promo.id}>
+                    <span className="st-promo-discount">{promo.discount}</span>
+                    <div className="st-promo-code">
+                      CODE: {promo.code || "-"}
+                    </div>
+                    <h3>{promo.title}</h3>
+                    <p>{promo.detail}</p>
+                    <div className="st-promo-period">{promo.period}</div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="st-section-block">
+              <div className="st-section-heading-row">
+                <h2 className="st-section-title">Client Reviews</h2>
+                <div className="st-review-overview">
+                  <span className="st-review-score">★ {averageRating}</span>
+                  <span className="st-review-caption">เสียงตอบรับจากลูกค้าของร้าน</span>
+                </div>
+              </div>
+              <div className="st-review-list">
+                {reviews.length > 0 ? (
+                  reviews.map((review) => (
+                    <article className="st-review-card" key={review.id}>
+                      <div className="st-review-top">
+                        <div>
+                          <h3>{review.name}</h3>
+                          <p>{review.date}</p>
+                        </div>
+                        <span className="st-review-stars">
+                          {"★".repeat(review.rating)}
+                          {"☆".repeat(Math.max(5 - review.rating, 0))}
+                        </span>
+                      </div>
+                      <p className="st-review-text">{review.text}</p>
+                    </article>
+                  ))
+                ) : (
+                  <article className="st-review-card st-review-empty">
+                    <p className="st-review-text">ยังไม่มีรีวิวของร้านนี้ในตอนนี้</p>
+                  </article>
+                )}
+              </div>
+            </section>
           </div>
 
           <div className="st-right-col">
@@ -143,9 +249,28 @@ export default function StorePage() {
                   </div>
                 ))}
               </div>
+              <div className="st-promo-field">
+                <label htmlFor="promo-code">Promotion Code</label>
+                <input
+                  id="promo-code"
+                  type="text"
+                  placeholder="กรอกโค้ดส่วนลดของร้าน"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                />
+                <p className="st-promo-hint">
+                  ใช้โค้ดจากการ์ดโปรโมชั่นของร้านด้านซ้าย
+                </p>
+              </div>
               <div style={{ borderTop: '1px solid #EEE', paddingTop: '20px', marginTop: '20px' }}>
+                {promoDiscount > 0 && (
+                  <div className="st-summary-row st-summary-discount">
+                    <span>Promotion Discount</span>
+                    <span>-฿{promoDiscount.toLocaleString()}</span>
+                  </div>
+                )}
                 <label style={{ fontSize: '10px', letterSpacing: '2px', color: '#B09987' }}>TOTAL</label>
-                <div style={{ fontSize: '36px', fontFamily: 'Tenor Sans' }}>฿{totalPrice.toLocaleString()}</div>
+                <div style={{ fontSize: '36px', fontFamily: 'Tenor Sans' }}>฿{finalPrice.toLocaleString()}</div>
               </div>
               <button className="st-btn-book" disabled={selected.size === 0} onClick={handleGoToBooking}>
                 Book Now

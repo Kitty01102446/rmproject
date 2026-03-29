@@ -1,9 +1,11 @@
 import "./Footer.css";
 import { Link } from "react-router-dom"; // เพิ่ม Link
 import { FaInstagram, FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
+import { useLanguage } from "../i18n.jsx";
 const logo = "/Logo/logoweb.png";
 
 export default function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="footer-section">
       <div className="footer-container">
@@ -11,11 +13,11 @@ export default function Footer() {
 
           {/* ส่วนซ้าย: Stay Up To Date (เหมือนเดิม) */}
           <div className="footer-col footer-newsletter">
-            <h3>STAY UP TO DATE</h3>
-            <p>This focuses on the idea of nail care not just as a beauty treatment, but as a confidence booster.</p>
+            <h3>{t("footer_stay_updated")}</h3>
+            <p>{t("footer_newsletter_text")}</p>
             <div className="email-input-group">
-              <input type="email" placeholder="EMAIL" />
-              <button className="btn-subscribe">SUBSCRIBE</button>
+              <input type="email" placeholder={t("footer_email")} />
+              <button className="btn-subscribe">{t("footer_subscribe")}</button>
             </div>
           </div>
 
@@ -28,8 +30,8 @@ export default function Footer() {
               </Link>
             </div>
             <p className="tagline">
-              Nail Your Style <br />
-              Because You Deserve the Best
+              {t("footer_tagline_line1")} <br />
+              {t("footer_tagline_line2")}
             </p>
             <div className="social-links">
               {/* ใส่ URL ใน href และใช้ Icon เป็นตัวแสดงผลข้างใน */}
@@ -58,16 +60,16 @@ export default function Footer() {
           {/* ส่วนขวา: Navigate (เหมือนเดิม) */}
           <div className="footer-col footer-nav">
             <div className="nav-header">
-              <h3>NAVIGATE</h3>
+              <h3>{t("footer_navigate")}</h3>
               <div className="nav-line"></div>
             </div>
             <div className="nav-links-grid">
-              <div className="nav-item"><a href="#">HOME</a></div>
-              <Link to="/helpCenter">CONTACT</Link>
-              <div className="nav-item"><a href="#">SERVICES</a></div>
-              <Link to="/aboutGlamNail">ABOUT</Link>
-              <div className="nav-item"><a href="#">FAQ</a></div>
-              <div className="nav-item"><a href="#">PRIVACY POLICY</a></div>
+              <div className="nav-item"><a href="#">{t("footer_home")}</a></div>
+              <Link to="/helpCenter">{t("footer_contact")}</Link>
+              <div className="nav-item"><a href="#">{t("footer_services")}</a></div>
+              <Link to="/aboutGlamNail">{t("footer_about")}</Link>
+              <div className="nav-item"><a href="#">{t("footer_faq")}</a></div>
+              <div className="nav-item"><a href="#">{t("footer_privacy")}</a></div>
             </div>
           </div>
 
@@ -79,7 +81,7 @@ export default function Footer() {
       </div>
 
       <button className="scroll-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-        TOP <span>↑</span>
+        {t("footer_top")} <span>↑</span>
       </button>
     </footer>
   );

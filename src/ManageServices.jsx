@@ -122,8 +122,8 @@ export default function ManageServices() {
     
 
   return (
-    <div className="admin-root">
-      <main className="manage">
+    <>
+      <section className="manage manage-services-page">
         <div className="header">
           <div>
             <h1>จัดการบริการ</h1>
@@ -198,7 +198,7 @@ export default function ManageServices() {
             </tbody>
           </table>
         </div>
-      </main>
+      </section>
 
       {/* ===== Modal เพิ่มบริการ ===== */}
       {adding &&
@@ -351,6 +351,6 @@ export default function ManageServices() {
           </div>,
           document.body
         )}
-    </div>
+    </>
   );
 }

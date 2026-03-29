@@ -1,19 +1,19 @@
 import axios from "axios";
-
-// ✅ เปลี่ยนตรงนี้
-const api = "https://backend-gold-kappa-26.vercel.app";
-
+// const api = "http://localhost:5010";
+const api ="https://backend-gold-kappa-26.vercel.app/"
 export async function getEmployeeByStore(storeId) {
   const res = await axios.get(`${api}/employees/store/${storeId}`);
   return res.data;
 }
 
+
 export async function getEmployeesByStore(storeId) {
   const response = await axios.get(
-    `${api}/employees/store/${storeId}`
+    `${api}/employees/store/${storeId}`  // ต้องมี s หน้า employees
   );
   return response.data;
 }
+
 
 export async function createEmployee(data) {
   const response = await axios.post(`${api}/employees`, data);

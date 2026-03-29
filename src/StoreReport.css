@@ -1,8 +1,8 @@
 :root {
-    --brand: #ff6b98;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --bg: #fafafa;
+    --brand: #d9789c;
+    --text: #684d59;
+    --muted: #90707d;
+    --bg: #fff7fb;
   }
   
 
@@ -10,7 +10,7 @@
   /* ✅ หน้ารายงานร้านแบบเต็มจอ */
   .report-page {
     font-family: "Prompt", sans-serif;
-    background: var(--bg);
+    background: linear-gradient(180deg, #fffafd, var(--bg));
     width: 100%;
     height: 100%;
     min-height: 100vh;
@@ -54,9 +54,9 @@
   }
   .actions select,
   .btn-export {
-    border: 1px solid #e5e7eb;
-    background: #fff;
-    border-radius: 10px;
+    border: 1px solid rgba(209, 139, 170, 0.18);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 14px;
     padding: 10px 14px;
     cursor: pointer;
     font-family: "Prompt";
@@ -76,14 +76,15 @@
   
   /* ===== Chart Section ===== */
   .chart-section {
-    background: #fff;
-    border-radius: 22px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 26px;
+    box-shadow: 0 18px 44px rgba(225, 178, 200, 0.14);
     padding: 28px;
     margin-bottom: 28px;
     width: 100%;
     max-width: 100%;
     overflow-x: auto; /* ✅ เลื่อนได้เมื่อจอเล็ก */
+    border: 1px solid rgba(209, 139, 170, 0.16);
   }
   
   /* กล่องเก็บกราฟ */
@@ -109,10 +110,11 @@
     min-width: 950px;
   }
   .table-card {
-    background: #fff;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 24px;
     padding: 22px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 18px 40px rgba(225, 178, 200, 0.12);
+    border: 1px solid rgba(209, 139, 170, 0.16);
   }
   .table-card h3 {
     color: var(--text);
@@ -128,11 +130,11 @@
     padding: 10px 12px;
     font-size: 0.9rem;
     text-align: left;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid rgba(209, 139, 170, 0.12);
   }
   .table-card th {
     color: var(--brand);
-    background: #fff5f9;
+    background: #fff1f6;
   }
   
   /* ===== Summary Cards ===== */
@@ -143,11 +145,12 @@
     min-width: 1000px;
   }
   .card {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 18px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 16px 36px rgba(225, 178, 200, 0.12);
     padding: 20px;
     transition: transform 0.25s;
+    border: 1px solid rgba(209, 139, 170, 0.16);
   }
   .card:hover {
     transform: translateY(-4px);
@@ -163,7 +166,7 @@
     font-size: 1.5rem;
   }
   .positive {
-    color: #059669;
+    color: #b76585;
     font-size: 0.85rem;
     font-weight: 500;
     margin-top: 4px;

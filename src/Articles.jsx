@@ -44,6 +44,33 @@ const ARTICLES = [
   },
 ];
 
+const HELPFUL_LINKS = [
+  {
+    title: "คลินิกดูแลสุขภาพเล็บ ดูแลเรื่องเล็บให้เป็นเรื่องเล็ก",
+    source: "โรงพยาบาลศิริราช ปิยมหาราชการุณย์",
+    desc: "รวมข้อมูลปัญหาเล็บที่พบบ่อย เช่น เล็บขบ เล็บเป็นเชื้อรา เล็บผิดรูป และแนวทางดูแลโดยทีมแพทย์ในไทย",
+    url: "https://www.siphhospital.com/th/news/news-activities/share/88",
+  },
+  {
+    title: "ดูแค่เล็บ ก็เช็คโรคได้",
+    source: "โรงพยาบาลพริ้นซ์ สุวรรณภูมิ",
+    desc: "อธิบายลักษณะเล็บที่อาจเชื่อมโยงกับภาวะสุขภาพต่าง ๆ และช่วยให้สังเกตความผิดปกติได้ง่ายขึ้น",
+    url: "https://www.princsuvarnabhumi.com/articles/content-nail-disease-check",
+  },
+  {
+    title: "เรื่องเล็บที่ไม่ควรมองข้าม",
+    source: "Asoke Skin Hospital",
+    desc: "เหมาะกับคนที่ทำเล็บบ่อย เพราะมีคำแนะนำเรื่องการตัดหนังรอบเล็บ ความชุ่มชื้น และการลดความเสี่ยงเชื้อรา",
+    url: "https://asokeskin.com/hospital-services/nail-issues-you-shouldnt-ignore-nail-care-you-shouldnt-overlook",
+  },
+  {
+    title: "คลินิกดูแลเท้าและเล็บ",
+    source: "โรงพยาบาลบำรุงราษฎร์",
+    desc: "ข้อมูลบริการดูแลเล็บและปัญหาเท้า-เล็บแบบครบวงจรในประเทศไทย โดยเฉพาะกลุ่มที่ต้องการการดูแลเฉพาะทาง",
+    url: "https://www.bumrungrad.com/th/centers/holistic-wound-care-center-bangkok-thailand",
+  },
+];
+
 export default function Articles() {
   // เริ่มต้นใช้งาน AOS
   useEffect(() => {
@@ -86,21 +113,46 @@ export default function Articles() {
                     <h3 className="articles-topic-title">KNOWLEDGE</h3>
                     <p className="articles-topic-label">FOUNDATION</p>
                     <p className="articles-topic-desc">พื้นฐานเรื่องเล็บที่ควรรู้ก่อนทำเล็บทุกประเภท เพื่อสุขภาพเล็บที่ยั่งยืน</p>
-                    <button className="articles-btn-readmore">READ MORE</button>
+                    <a className="articles-btn-readmore" href="https://www.siphhospital.com/th/news/news-activities/share/88" target="_blank" rel="noopener noreferrer">READ MORE</a>
                 </div>
                 <div className="articles-topic-card" data-aos="fade-up" data-aos-delay="400">
                     <h3 className="articles-topic-title">AI ANALYSIS</h3>
                     <p className="articles-topic-label">SMART BEAUTY</p>
                     <p className="articles-topic-desc">การนำเทคโนโลยี AI มาช่วยวิเคราะห์โทนผิวและรูปทรงเล็บที่เหมาะกับคุณ</p>
-                    <button className="articles-btn-readmore">READ MORE</button>
+                    <Link className="articles-btn-readmore" to="/analyze">READ MORE</Link>
                 </div>
                 <div className="articles-topic-card" data-aos="fade-up" data-aos-delay="600">
                     <h3 className="articles-topic-title">TREND 2025</h3>
                     <p className="articles-topic-label">FASHION LOOK</p>
                     <p className="articles-topic-desc">อัปเดตเทรนด์สีเล็บและดีไซน์สุดชิคก่อนใครในปี 2025</p>
-                    <button className="articles-btn-readmore">READ MORE</button>
+                    <a className="articles-btn-readmore" href="https://www.princsuvarnabhumi.com/articles/content-nail-disease-check" target="_blank" rel="noopener noreferrer">READ MORE</a>
                 </div>
             </div>
+        </div>
+      </section>
+
+      <section className="container-articles articles-resource-section">
+        <div className="articles-resource-header" data-aos="fade-right">
+          <p className="articles-sub-title">RELATED LINKS</p>
+          <h3 className="articles-resource-title">Helpful Resources You Can Continue Reading</h3>
+        </div>
+        <div className="articles-resource-grid">
+          {HELPFUL_LINKS.map((item, index) => (
+            <a
+              key={item.url}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="articles-resource-card"
+              data-aos="fade-up"
+              data-aos-delay={index * 120}
+            >
+              <p className="articles-resource-source">{item.source}</p>
+              <h4>{item.title}</h4>
+              <p className="articles-resource-desc">{item.desc}</p>
+              <span className="articles-resource-link">Open Link ↗</span>
+            </a>
+          ))}
         </div>
       </section>
 
@@ -110,7 +162,7 @@ export default function Articles() {
             <p style={{ fontStyle: 'italic', fontSize: '18px' }}>Need more Information?</p>
             <h2 className="articles-banner-title">GET IN TOUCH</h2>
             <p className="articles-banner-sub">พร้อมปรึกษาเรื่องสุขภาพเล็บและการเลือกสีที่ใช่สำหรับคุณผ่าน AI ของเรา</p>
-            <button className="articles-btn-white">MESSAGE ME</button>
+            <Link className="articles-btn-white" to="/helpCenter">MESSAGE ME</Link>
         </div>
       </section>
 

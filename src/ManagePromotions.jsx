@@ -1,92 +1,151 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactDOM from "react-dom";
-import { FiEdit2, FiShare2, FiPlusCircle, FiX, FiSave } from "react-icons/fi";
+import { useParams } from "react-router-dom";
+import { FiEdit2, FiPlusCircle, FiTrash2, FiX, FiSave } from "react-icons/fi";
+import {
+  getPromotionsByStore,
+  createPromotion,
+  updatePromotion,
+  deletePromotion,
+} from "./callapi/call_api_promotion.jsx";
 import "./ManagePromotions.css";
 
-export default function ManagePromotions() {
-  const [promotions, setPromotions] = useState([
-    {
-      id: 1,
-      name: "ส่วนลดรับฝน 20%",
-      desc: "ส่วนลด 20% สำหรับลูกค้าที่จองคิวทำเล็บในสัปดาห์นี้",
-      date: "1 ต.ค. ถึง 31 ต.ค.",
-      discount: "20%",
-      bookings: 45,
-      status: "กำลังใช้งาน",
-    },
-    {
-      id: 2,
-      name: "Happy Friday",
-      desc: "ลดราคาพิเศษวันศุกร์ทุกสัปดาห์",
-      date: "1 ต.ค. ถึง 31 ต.ค.",
-      discount: "15%",
-      bookings: 32,
-      status: "กำลังใช้งาน",
-    },
-    {
-      id: 3,
-      name: "แพ็กพิเศษต่อเล็บ + เพ้นท์",
-      desc: "แพ็กเกจ ต่อเล็บ + เพ้นท์ ลดเพิ่ม 25%",
-      date: "1 พ.ย. ถึง 30 พ.ย.",
-      discount: "25%",
-      bookings: 0,
-      status: "เตรียมใช้",
-    },
-    {
-      id: 4,
-      name: "ลูกค้าใหม่ลด 10%",
-      desc: "ส่วนลดพิเศษสำหรับลูกค้าใหม่",
-      date: "1 ก.ย. ถึง 30 ก.ย.",
-      discount: "10%",
-      bookings: 28,
-      status: "หมดอายุ",
-    },
-  ]);
+const initialForm = {
+  name: "",
+  detail: "",
+  discount: "",
+  promo_code: "",
+  start_date: "",
+  end_date: "",
+};
 
+function formatDateRange(startDate, endDate) {
+  if (!startDate && !endDate) return "-";
+  const formatOne = (value) =>
+    value ? new Date(value).toLocaleDateString("th-TH") : "-";
+  return `${formatOne(startDate)} - ${formatOne(endDate)}`;
+}
+
+function getStatus(startDate, endDate) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (startDate) {
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+    if (start > today) return "เตรียมใช้";
+  }
+
+  if (endDate) {
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
+    if (end < today) return "หมดอายุ";
+  }
+
+  return "กำลังใช้งาน";
+}
+
+export default function ManagePromotions() {
+  const { storeId } = useParams();
+  const [promotions, setPromotions] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingPromo, setEditingPromo] = useState(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    desc: "",
-    date: "",
-    discount: "",
-    bookings: 0,
-    status: "กำลังใช้งาน",
-  });
+  const [formData, setFormData] = useState(initialForm);
+
+  async function fetchPromotions() {
+    if (!storeId) return;
+    try {
+      setLoading(true);
+      const rows = await getPromotionsByStore(storeId);
+      setPromotions(Array.isArray(rows) ? rows : []);
+    } catch (error) {
+      console.error("Error fetching promotions:", error);
+      setPromotions([]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchPromotions();
+  }, [storeId]);
+
+  const mappedPromotions = useMemo(
+    () =>
+      promotions.map((promo) => ({
+        id: promo.promo_id,
+        name: promo.name,
+        desc: promo.detail || "-",
+        date: formatDateRange(promo.start_date, promo.end_date),
+        discount: `${Number(promo.discount || 0)}%`,
+        code: promo.promo_code || "-",
+        status: getStatus(promo.start_date, promo.end_date),
+      })),
+    [promotions]
+  );
 
   const handleAdd = () => {
     setEditingPromo(null);
-    setFormData({
-      name: "",
-      desc: "",
-      date: "",
-      discount: "",
-      bookings: 0,
-      status: "กำลังใช้งาน",
-    });
+    setFormData(initialForm);
     setShowModal(true);
   };
 
   const handleEdit = (promo) => {
     setEditingPromo(promo);
-    setFormData(promo);
+    setFormData({
+      name: promo.name || "",
+      detail: promo.detail || "",
+      discount: String(promo.discount ?? ""),
+      promo_code: promo.promo_code || "",
+      start_date: promo.start_date ? String(promo.start_date).slice(0, 10) : "",
+      end_date: promo.end_date ? String(promo.end_date).slice(0, 10) : "",
+    });
     setShowModal(true);
   };
 
-  const handleSave = () => {
-    if (!formData.name || !formData.desc || !formData.date || !formData.discount) {
-      alert("กรุณากรอกข้อมูลให้ครบ");
+  const handleDelete = async (promoId) => {
+    if (!window.confirm("ต้องการลบโปรโมชั่นนี้ใช่ไหม")) return;
+    try {
+      await deletePromotion(promoId);
+      await fetchPromotions();
+    } catch (error) {
+      console.error("Delete promotion error:", error);
+      alert("ลบโปรโมชั่นไม่สำเร็จ");
+    }
+  };
+
+  const handleSave = async () => {
+    if (!formData.name || !formData.discount) {
+      alert("กรุณากรอกชื่อโปรโมชั่นและส่วนลด");
       return;
     }
 
-    if (editingPromo) {
-      setPromotions((prev) =>
-        prev.map((p) => (p.id === editingPromo.id ? { ...formData, id: p.id } : p))
-      );
-    } else {
-      setPromotions((prev) => [...prev, { ...formData, id: Date.now() }]);
+    const payload = {
+      name: formData.name.trim(),
+      detail: formData.detail.trim(),
+      discount: Number(formData.discount),
+      store_id: Number(storeId),
+      type_promo_id: 1,
+      promo_code: formData.promo_code.trim() || null,
+      start_date: formData.start_date || null,
+      end_date: formData.end_date || null,
+    };
+
+    try {
+      if (editingPromo) {
+        await updatePromotion(editingPromo.promo_id, payload);
+      } else {
+        await createPromotion(payload);
+      }
+      setShowModal(false);
+      setEditingPromo(null);
+      setFormData(initialForm);
+      await fetchPromotions();
+    } catch (error) {
+      console.error("Save promotion error:", error);
+      alert("บันทึกโปรโมชั่นไม่สำเร็จ");
     }
-    setShowModal(false);
   };
 
   return (
@@ -95,7 +154,7 @@ export default function ManagePromotions() {
         <div className="header">
           <div>
             <h1>โปรโมชั่นและแพ็กเกจ</h1>
-            <p>จัดการโปรโมชั่นและส่วนลดพิเศษ</p>
+            <p>จัดการโปรโมชั่นและส่วนลดพิเศษของร้านนี้</p>
           </div>
           <button className="btn-add" onClick={handleAdd}>
             <FiPlusCircle /> เพิ่มโปรโมชั่นใหม่
@@ -104,57 +163,64 @@ export default function ManagePromotions() {
 
         <div className="table-wrapper">
           <h3>รายการโปรโมชั่นทั้งหมด</h3>
-          <table className="promotion-table">
-            <thead>
-              <tr>
-                <th>ชื่อโปร</th>
-                <th>วันที่เริ่ม - สิ้นสุด</th>
-                <th>ส่วนลด</th>
-                <th>ยอดจอง</th>
-                <th>สถานะ</th>
-                <th>การดำเนินการ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {promotions.map((p) => (
-                <tr key={p.id}>
-                  <td>
-                    <strong>{p.name}</strong>
-                    <div className="desc">{p.desc}</div>
-                  </td>
-                  <td>{p.date}</td>
-                  <td>
-                    <span className="discount-badge">{p.discount}</span>
-                  </td>
-                  <td>📊 {p.bookings}</td>
-                  <td>
-                    <span
-                      className={
-                        p.status === "กำลังใช้งาน"
-                          ? "badge active"
-                          : p.status === "เตรียมใช้"
-                          ? "badge upcoming"
-                          : "badge expired"
-                      }
-                    >
-                      {p.status}
-                    </span>
-                  </td>
-                  <td>
-                    <button className="btn-icon">
-                      <FiShare2 />
-                    </button>
-                    <button className="btn-icon" onClick={() => handleEdit(p)}>
-                      <FiEdit2 />
-                    </button>
-                  </td>
+          {loading ? (
+            <div className="promotion-empty">กำลังโหลดข้อมูลโปรโมชั่น...</div>
+          ) : mappedPromotions.length === 0 ? (
+            <div className="promotion-empty">ยังไม่มีโปรโมชั่นในฐานข้อมูล</div>
+          ) : (
+            <table className="promotion-table">
+              <thead>
+                <tr>
+                  <th>ชื่อโปร</th>
+                  <th>โค้ด</th>
+                  <th>วันที่เริ่ม - สิ้นสุด</th>
+                  <th>ส่วนลด</th>
+                  <th>สถานะ</th>
+                  <th>การดำเนินการ</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {mappedPromotions.map((p) => (
+                  <tr key={p.id}>
+                    <td>
+                      <strong>{p.name}</strong>
+                      <div className="desc">{p.desc}</div>
+                    </td>
+                    <td>
+                      <span className="code-badge">{p.code}</span>
+                    </td>
+                    <td>{p.date}</td>
+                    <td>
+                      <span className="discount-badge">{p.discount}</span>
+                    </td>
+                    <td>
+                      <span
+                        className={
+                          p.status === "กำลังใช้งาน"
+                            ? "badge active"
+                            : p.status === "เตรียมใช้"
+                              ? "badge upcoming"
+                              : "badge expired"
+                        }
+                      >
+                        {p.status}
+                      </span>
+                    </td>
+                    <td>
+                      <button className="btn-icon" onClick={() => handleEdit(promotions.find((item) => item.promo_id === p.id))}>
+                        <FiEdit2 />
+                      </button>
+                      <button className="btn-icon btn-icon-danger" onClick={() => handleDelete(p.id)}>
+                        <FiTrash2 />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
-        {/* Modal */}
         {showModal &&
           ReactDOM.createPortal(
             <div className="modal-overlay" onClick={() => setShowModal(false)}>
@@ -176,35 +242,41 @@ export default function ManagePromotions() {
 
                   <label>รายละเอียด</label>
                   <textarea
-                    value={formData.desc}
-                    onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
+                    value={formData.detail}
+                    onChange={(e) => setFormData({ ...formData, detail: e.target.value })}
                   />
 
-                  <label>วันที่เริ่มต้น - สิ้นสุด</label>
+                  <label>โค้ดโปรโมชั่น</label>
                   <input
                     type="text"
-                    placeholder="เช่น 1 พ.ย. ถึง 30 พ.ย."
-                    value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    value={formData.promo_code}
+                    onChange={(e) =>
+                      setFormData({ ...formData, promo_code: e.target.value.toUpperCase() })
+                    }
+                    placeholder="เช่น NEW10"
                   />
 
                   <label>ส่วนลด (%)</label>
                   <input
-                    type="text"
-                    placeholder="เช่น 20%"
+                    type="number"
+                    min="0"
                     value={formData.discount}
                     onChange={(e) => setFormData({ ...formData, discount: e.target.value })}
                   />
 
-                  <label>สถานะ</label>
-                  <select
-                    value={formData.status}
-                    onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  >
-                    <option value="กำลังใช้งาน">กำลังใช้งาน</option>
-                    <option value="เตรียมใช้">เตรียมใช้</option>
-                    <option value="หมดอายุ">หมดอายุ</option>
-                  </select>
+                  <label>วันที่เริ่มต้น</label>
+                  <input
+                    type="date"
+                    value={formData.start_date}
+                    onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                  />
+
+                  <label>วันที่สิ้นสุด</label>
+                  <input
+                    type="date"
+                    value={formData.end_date}
+                    onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+                  />
                 </div>
 
                 <div className="modal-actions">

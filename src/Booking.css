@@ -126,9 +126,15 @@
   background: white;
   cursor: pointer;
   transition: 0.3s;
+  border-radius: 24px;
+  box-shadow: 0 14px 30px rgba(225, 178, 200, 0.08);
 }
 
-.bk-tech-card.active { border-color: var(--text-main); background: #F8F5F2; }
+.bk-tech-card.active {
+  border-color: #d98cab;
+  background: #fff5f9;
+  box-shadow: 0 18px 34px rgba(217, 140, 171, 0.16);
+}
 
 .bk-tech-avatar {
   width: 60px; height: 60px;
@@ -185,6 +191,8 @@
   background: white;
   border: 1px solid var(--border-fine);
   padding: 40px;
+  border-radius: 28px;
+  box-shadow: 0 18px 40px rgba(225, 178, 200, 0.14);
 }
 
 .bk-summary-title { font-family: 'Tenor Sans', serif; font-size: 20px; margin-bottom: 30px; text-align: center; }
@@ -194,12 +202,76 @@
   font-size: 14px; margin-bottom: 15px; color: #555;
 }
 
+.bk-promo-box {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-fine);
+}
+
+.bk-promo-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #b78698;
+  text-transform: uppercase;
+}
+
+.bk-promo-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #edd9e1;
+  background: #fff8fb;
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #6d4f5c;
+  outline: none;
+}
+
+.bk-promo-input:focus {
+  border-color: #d98cab;
+  box-shadow: 0 0 0 4px rgba(217, 140, 171, 0.12);
+}
+
+.bk-promo-hint {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #aa8191;
+}
+
+.bk-applied-promo {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #fff1f6;
+  border: 1px solid #f1d4df;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #b35d80;
+  font-size: 12px;
+}
+
+.bk-applied-promo strong {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
 .bk-total-area {
   margin-top: 30px; padding-top: 30px;
   border-top: 1px solid var(--border-fine);
 }
 
 .bk-total-row { display: flex; justify-content: space-between; align-items: baseline; }
+.bk-discount-row {
+  margin-bottom: 14px;
+  color: #c36489;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
 .bk-total-price { font-family: 'Tenor Sans', serif; font-size: 32px; }
 .bk-total-mins { font-size: 12px; color: var(--accent); display: block; margin-top: 5px; }
 

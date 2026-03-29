@@ -83,8 +83,8 @@ export default function ManageEmployees() {
     }
   };
   return (
-    <div className="admin-root">
-      <main className="manage">
+    <>
+      <section className="manage manage-employees-page">
         <div className="header">
           <div>
             <h1>จัดการพนักงาน</h1>
@@ -174,7 +174,7 @@ export default function ManageEmployees() {
             </tbody>
           </table>
         </div>
-      </main>
+      </section>
 
       {/* ===== Modal แก้ไข / เพิ่ม ===== */}
       {editing &&
@@ -278,6 +278,6 @@ export default function ManageEmployees() {
           </div>,
           document.body
         )}
-    </div>
+    </>
   );
 }

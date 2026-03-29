@@ -1,77 +1,10 @@
-/* =========================================
-   SIDEBAR – Nail Salon Pro
-========================================= */
-.sidebar {
-  width: 260px;
-  background: linear-gradient(180deg, #ffffff 0%, #fff5f9 100%);
-  border-right: 1px solid #f3e8ee;
-  padding: 28px 18px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.logo {
-  font-size: 1.3rem;
-  font-weight: 700;
+/* ===== Main Report Content ===== */
+.report-page h1 {
   color: #ff6b98;
-  margin-bottom: 28px;
-  text-align: center;
-  letter-spacing: 0.5px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding: 0;
 }
-
-.menu {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.menu a {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #555;
-  text-decoration: none;
-  padding: 10px 14px;
-  border-radius: 12px;
-  display: block;
-  transition: all 0.25s ease;
-}
-
-.menu a:hover {
-  background: #ffeaf2;
-  color: #ff4f87;
-  transform: translateX(4px);
-}
-
-.menu a.active {
-  background: linear-gradient(90deg, #ff6b98, #ff8fb3);
-  color: #fff;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(255, 107, 152, 0.25);
-}
-
-/* Divider spacing for long menu */
-.menu a + a {
-  margin-top: 2px;
-}
-  
-  /* ===== Main ===== */
-  .dashboard {
-    flex: 1;
-    background: #fafafa;
-    padding: 32px 48px;
-    margin-left: 40px; /* ✅ ให้เนื้อหาชิดแนวกับ sidebar */
-    box-sizing: border-box;
-    overflow-y: auto;
-  }
-  
-  
-  .dashboard h1 {
-    color: #ff6b98;
-    font-size: 1.4rem;
-    font-weight: 700;
-    padding: 0;
-  }
   
   .subtitle {
     color: #888;
@@ -112,11 +45,11 @@
     height: 100%;
   }
   
-  .booking-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
+.booking-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
   .booking-table th,
   .booking-table td {
     text-align: left;
@@ -136,10 +69,70 @@
     background: #fff4e5;
     color: #f5a623;
   }
-  .status.done {
-    background: #f0f0f0;
-    color: #666;
-  }
+.status.done {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.recent-bookings-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.recent-bookings-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.recent-bookings-head h3 {
+  margin: 0;
+}
+
+.mini-pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.mini-page-btn {
+  border: 1px solid #f0d8e2;
+  background: #fff7fb;
+  color: #b76585;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-weight: 600;
+  font-family: "Prompt", sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mini-page-btn:hover:not(:disabled) {
+  background: #ffeef5;
+}
+
+.mini-page-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.mini-page-info {
+  color: #8f7380;
+  font-size: 0.9rem;
+  min-width: 64px;
+  text-align: center;
+}
+
+.empty-bookings {
+  padding: 16px 0 4px;
+  color: #9c8a92;
+  text-align: center;
+}
   
   /* Alerts */
   .card.alerts ul {
@@ -167,16 +160,6 @@
       grid-template-columns: 1fr;
     }
   }
-  @media (max-width: 640px) {
-    .sidebar {
-      display: none;
-    }
-    .dashboard {
-      margin-left: 0;
-      padding: 20px;
-    }
-  }
-  
   :root {
     --brand: #ff6b98;
     --text: #1f2937;
@@ -189,21 +172,20 @@
   /* ✅ หน้ารายงานร้านแบบเต็มจอ */
   .report-page {
     font-family: "Prompt", sans-serif;
-    background: var(--bg);
+    background: transparent;
     width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    overflow-y: auto;   /* ✅ เลื่อนแนวตั้งได้ */
+    min-height: auto;
+    overflow: visible;
     position: relative;
-
   }
   
   /* ✅ พื้นที่เนื้อหาภายใน (ให้กว้างเกิน 100vw ได้จริง) */
   .report {
-    min-width: 1400px;  /* ✅ กำหนดความกว้างขั้นต่ำ — ป้องกันโดนบีบ */
-    width: max-content; /* ✅ ถ้ามีเนื้อหาเยอะ ให้ขยายได้ไม่จำกัด */
-    height: max-content;
-    padding: 2.5rem 3rem;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    padding: 0;
     display: block;     /* ✅ อย่าใช้ flex เพราะมันบีบ */
     box-sizing: border-box;
   }
@@ -342,148 +324,11 @@
     margin-top: 4px;
   }
   
-  /* =========================================
-     GLOBAL ADMIN STRUCTURE
-  ========================================= */
-  
-  .admin-root {
-    display: flex;
-    min-height: 100vh;
-    background: linear-gradient(180deg, #fffafd 0%, #fafafa 100%);
-    font-family: "Prompt", sans-serif;
-  }
-  
-  /* Shared content wrapper for all admin pages */
-  .admin-content {
-    flex: 1;
-    padding: 40px 50px;
-    box-sizing: border-box;
-  }
-  
-  /* Shared page title */
-  .page-title {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #ff6b98;
-    margin-bottom: 6px;
-  }
-  
-  .page-subtitle {
-    font-size: 0.95rem;
-    color: #6b7280;
-    margin-bottom: 28px;
-  }
-  
-  /* =========================================
-     GLOBAL ADMIN CARD SYSTEM
-  ========================================= */
-  
-  .admin-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 24px;
-    box-shadow: 0 6px 20px rgba(255, 107, 152, 0.08);
-    transition: all 0.25s ease;
-  }
-  
-  .admin-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(255, 107, 152, 0.12);
-  }
-  
-  .admin-card h3 {
-    font-size: 1rem;
-    margin-bottom: 14px;
-    color: #1f2937;
-  }
-  
-  /* =========================================
-     GLOBAL BUTTONS
-  ========================================= */
-  
-  .btn-primary {
-    background: linear-gradient(90deg, #ff6b98, #ff8fb3);
-    color: #fff;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 999px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: 0.25s;
-  }
-  
-  .btn-primary:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-  }
-  
-  .btn-outline {
-    background: #fff;
-    border: 1px solid #ff6b98;
-    color: #ff6b98;
-    padding: 10px 18px;
-    border-radius: 999px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: 0.25s;
-  }
-  
-  .btn-outline:hover {
-    background: #ff6b98;
-    color: #fff;
-  }
-  
-  /* =========================================
-     GLOBAL TABLE STYLE
-  ========================================= */
-  
-  .admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  .admin-table th {
-    background: #fff0f6;
-    color: #ff6b98;
-    font-weight: 600;
-    padding: 12px;
-    text-align: left;
-  }
-  
-  .admin-table td {
-    padding: 12px;
-    border-bottom: 1px solid #f3f4f6;
-    font-size: 0.9rem;
-  }
-  
-  .admin-table tr:hover {
-    background: #fff5fa;
-  }
-  
-/* ✅ แก้ไข Dashboard/Report Container */
-.dashboard.report {
-  flex: 1;
-  padding: 32px 48px;
-  margin-left: 0;      /* ✅ ลบการดัน */
-  box-sizing: border-box;
-
-  width: 100%;
-  max-width: 1400px;     /* ✅ เอา 1400px ออก */
-  margin: 0;           /* ✅ เอา auto ออก */
-}
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* ให้ Card ปรับขนาดเองตามหน้าจอ */
   gap: 18px;
   margin-bottom: 30px;
-}
-
-/* ✅ ส่วนที่เคยทำให้เลื่อนไม่ได้ (ลบ overflow-y: auto ซ้อนออก) */
-.report-page {
-  width: 100%;
-  height: auto; /* เปลี่ยนจาก 100% */
-  min-height: 100vh;
 }
 .grid-2, .table-row {
   display: grid;
@@ -504,24 +349,4 @@
   width: 100%;
   height: 350px;
   min-width: unset; /* ลบค่าคงที่ออก */
-}
-
-/* Mobile Responsive */
-@media (max-width: 1024px) {
-  .admin-content {
-    padding: 25px;
-  }
-  .table-row,
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .sidebar {
-    display: none;
-  }
-  .admin-content {
-    padding: 18px;
-  }
 }

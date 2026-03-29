@@ -250,6 +250,44 @@ section{ padding:28px 0 }
   z-index:1000;
   background:#fff;
 }
+
+.marquee-strip{
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid rgba(209, 139, 170, 0.18);
+  border-bottom: 1px solid rgba(209, 139, 170, 0.18);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.marquee-track{
+  display: flex;
+  width: max-content;
+  animation: home2Marquee 28s linear infinite;
+}
+
+.marquee-content{
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.marquee-content span{
+  display: inline-block;
+  padding: 14px 18px;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: #9a7b88;
+}
+
+@keyframes home2Marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
 .ai-intro {
   padding: 4rem 0;
   background: linear-gradient(180deg, #fff, #fff5f7);
@@ -311,6 +349,58 @@ section{ padding:28px 0 }
 .ai-footer {
   font-weight: 500;
   color: #8a2c4a;
+}
+
+.luxury-card {
+  position: relative;
+}
+
+.luxury-heart {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(209, 139, 170, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #c98aa3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  box-shadow: 0 10px 22px rgba(225, 178, 200, 0.16);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.luxury-heart:hover {
+  transform: scale(1.06);
+  border-color: rgba(217, 122, 156, 0.28);
+}
+
+.luxury-heart.active {
+  background: linear-gradient(135deg, #efa3c0, #d9789c);
+  color: #fff;
+  border-color: transparent;
+}
+
+.top-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #b46f8d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 /* ===== AI SKIN TONE & NAIL SHAPE ===== */
 /* ================= AI DETAIL ================= */

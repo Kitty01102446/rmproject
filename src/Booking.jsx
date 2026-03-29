@@ -24,6 +24,8 @@ export default function BookingPage() {
   const [cNote, setCNote] = useState("");
   const [activeKey, setActiveKey] = useState("services");
   const [bookedTimes, setBookedTimes] = useState([]);
+  const [promoCode, setPromoCode] = useState("");
+  const [promotions, setPromotions] = useState([]);
   useEffect(() => {
 
     if (!tech || !dateStr) return;
@@ -58,6 +60,8 @@ export default function BookingPage() {
     if (p) {
       setPayload(p);
       setCheckedIds((p.services || []).map(s => s.id));
+      setPromoCode(p.promoCode || "");
+      setPromotions(p.promotions || []);
     }
   }, []);
 
@@ -80,6 +84,16 @@ export default function BookingPage() {
   const chosen = useMemo(() => allServices.filter(s => checkedIds.includes(s.id)), [allServices, checkedIds]);
   const totalMins = chosen.reduce((acc, s) => acc + Number(s.minutes || 0), 0);
   const totalPrice = chosen.reduce((acc, s) => acc + Number(s.price || 0), 0);
+  const normalizedPromoCode = promoCode.trim().toUpperCase();
+  const activePromotion = normalizedPromoCode
+    ? promotions.find(
+        (promo) => String(promo.code || "").trim().toUpperCase() === normalizedPromoCode
+      )
+    : null;
+  const promoDiscount = activePromotion
+    ? Math.round(totalPrice * (Number(activePromotion.discountValue || 0) / 100))
+    : 0;
+  const finalPrice = Math.max(totalPrice - promoDiscount, 0);
 
   const thb = (n) => "฿" + Number(n || 0).toLocaleString();
 
@@ -137,10 +151,12 @@ export default function BookingPage() {
           price: s.price,
           minutes: s.minutes
         })),
-        total_price: totalPrice,
+        total_price: finalPrice,
         total_minutes: totalMins,
         type_booking_id: 1,
-        status_booking_id: 1
+        status_booking_id: 1,
+        promotion_code: normalizedPromoCode || null,
+        promotion_discount: promoDiscount,
       };
 
       await createBooking(payloadSend);
@@ -149,7 +165,7 @@ export default function BookingPage() {
         title: "จองคิวสำเร็จ",
         html: `<p>${payload.storeName}</p>
                <p>วันที่ ${dateStr} เวลา ${timeStr}</p>
-               <h3>${thb(totalPrice)}</h3>`,
+               <h3>${thb(finalPrice)}</h3>`,
         icon: "success",
         confirmButtonColor: "#2D4A43"
       }).then(() => navigate("/AllStores"));
@@ -289,10 +305,35 @@ export default function BookingPage() {
               ))}
             </div>
 
+            <div className="bk-promo-box">
+              <label htmlFor="booking-promo" className="bk-promo-label">Promotion Code</label>
+              <input
+                id="booking-promo"
+                className="bk-promo-input"
+                type="text"
+                placeholder="กรอกโค้ดส่วนลดของร้าน"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value)}
+              />
+              <p className="bk-promo-hint">โค้ดนี้จะตรวจจากโปรโมชั่นจริงของร้านที่คุณเลือก</p>
+              {normalizedPromoCode && (
+                <div className="bk-applied-promo">
+                  <span>{promoDiscount > 0 ? "Applied Code" : "Code Entered"}</span>
+                  <strong>{normalizedPromoCode}</strong>
+                </div>
+              )}
+            </div>
+
             <div className="bk-total-area">
+              {promoDiscount > 0 && (
+                <div className="bk-total-row bk-discount-row">
+                  <span>PROMOTION DISCOUNT</span>
+                  <span>-{thb(promoDiscount)}</span>
+                </div>
+              )}
               <div className="bk-total-row">
                 <span style={{ fontSize: '10px', letterSpacing: '1px' }}>TOTAL AMOUNT</span>
-                <span className="bk-total-price">{thb(totalPrice)}</span>
+                <span className="bk-total-price">{thb(finalPrice)}</span>
               </div>
               <span className="bk-total-mins">{totalMins} Minutes Service</span>
             </div>

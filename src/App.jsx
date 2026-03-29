@@ -29,6 +29,7 @@ import ManageInventory from "./ManageInventory";
 import ManagePromotions from "./ManagePromotions";
 import StoreReport from "./StoreReport";
 import StoreSettings from "./StoreSettings";
+import { LanguageProvider } from "./i18n.jsx";
 
 import "./App.css";
 
@@ -51,7 +52,7 @@ export default function App() {
     location.pathname.startsWith("/StoreSettings");
 
   return (
-    <>
+    <LanguageProvider>
       {!hideNavAndFooter && <Navbar />}
 
       <div className="page">
@@ -72,23 +73,18 @@ export default function App() {
           <Route path="/UserProfile" element={<UserProfile />} />
 
           {/* ======= กลุ่มหน้าฝั่งร้าน (มี Sidebar ของตัวเอง) ======= */}
-          <Route path="/" element={<Navadmin />}>
-
-            <Route path="/StoreDashboard/:storeId" element={<Navadmin />}>
-              <Route index element={<StoreDashboard />} />
-              <Route path="services" element={<ManageServices />} />
-              <Route path="schedule" element={<ManageSchedule />} />
-              <Route path="employees" element={<ManageEmployees />} />
-              <Route path="bookings" element={<ManageBookings />} />
-              <Route path="reviews" element={<ManageReviews />} />
-              <Route path="gallery" element={<ManageGallery />} />
-              <Route path="inventory" element={<ManageInventory />} />
-              <Route path="promotions" element={<ManagePromotions />} />
-              <Route path="report" element={<StoreReport />} />
-              <Route path="settings" element={<StoreSettings />} />
-            </Route>
-
-
+          <Route path="/StoreDashboard/:storeId" element={<Navadmin />}>
+            <Route index element={<StoreDashboard />} />
+            <Route path="services" element={<ManageServices />} />
+            <Route path="schedule" element={<ManageSchedule />} />
+            <Route path="employees" element={<ManageEmployees />} />
+            <Route path="bookings" element={<ManageBookings />} />
+            <Route path="reviews" element={<ManageReviews />} />
+            <Route path="gallery" element={<ManageGallery />} />
+            <Route path="inventory" element={<ManageInventory />} />
+            <Route path="promotions" element={<ManagePromotions />} />
+            <Route path="report" element={<StoreReport />} />
+            <Route path="settings" element={<StoreSettings />} />
           </Route>
 
           <Route path="*" element={<div style={{ padding: 24 }}>404 Not Found</div>} />
@@ -96,6 +92,6 @@ export default function App() {
       </div>
 
       {!hideNavAndFooter && <Footer />}
-    </>
+    </LanguageProvider>
   );
 }
