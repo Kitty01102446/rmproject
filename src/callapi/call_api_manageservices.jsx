@@ -1,11 +1,11 @@
 import axios from "axios";
 // const API = "http://localhost:5010";
-const api ="https://backend-gold-kappa-26.vercel.app/"
+const api ="https://backend-gold-kappa-26.vercel.app"
 // ===============================
 // GET SERVICE BY STORE
 // ===============================
 export const fetchServicesByStore = async (storeId) => {
-  const res = await axios.get(`${API}/service/store/${storeId}`);
+  const res = await axios.get(`${api}/service/store/${storeId}`);
   return res.data;
 };
 
@@ -13,7 +13,7 @@ export const fetchServicesByStore = async (storeId) => {
 // CREATE
 // ===============================
 export const createService = async (data) => {
-  const res = await axios.post(`${API}/service`, data);
+  const res = await axios.post(`${api}/service`, data);
   return res.data;
 };
 
@@ -21,7 +21,7 @@ export const createService = async (data) => {
 // UPDATE
 // ===============================
 export const updateServiceAPI = async (id, data) => {
-  const res = await axios.put(`${API}/service/${id}`, data);
+  const res = await axios.put(`${api}/service/${id}`, data);
   return res.data;
 };
 
@@ -29,6 +29,6 @@ export const updateServiceAPI = async (id, data) => {
 // DELETE
 // ===============================
 export const deleteServiceAPI = async (id) => {
-  const res = await axios.delete(`${API}/service/${id}`);
+  const res = await axios.delete(`${api}/service/${id}`);
   return res.data;
 };

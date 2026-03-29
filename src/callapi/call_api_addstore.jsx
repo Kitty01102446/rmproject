@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // const api = "http://localhost:5010"; // ตรวจสอบว่า URL ตรงกับ Backend ของคุณแ
-const api ="https://backend-gold-kappa-26.vercel.app/"
+const api ="https://backend-gold-kappa-26.vercel.app"
 // สำหรับสมัครร้านค้าใหม่ (ใช้ชื่อนี้จะสื่อสารเข้าใจง่าย)
 export async function registerStore(payload) {
   try {

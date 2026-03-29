@@ -1,6 +1,6 @@
 import axios from "axios";
 // let api = "http://localhost:5010";
-const api ="https://backend-gold-kappa-26.vercel.app/"
+const api ="https://backend-gold-kappa-26.vercel.app"
 
 
 export async function updateUserById(userId, payload) {

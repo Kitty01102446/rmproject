@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // const api = "http://localhost:5010"; // ตรวจสอบว่า URL ตรงกับ Backend ของคุณ
-const api ="https://backend-gold-kappa-26.vercel.app/"
+const api ="https://backend-gold-kappa-26.vercel.app"
 export async function getTopServices(storeId) {
   try {
     const response = await axios.get(
