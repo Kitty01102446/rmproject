@@ -1,6 +1,6 @@
 import axios from "axios";
 import { authHeader } from "./auth";
-const api = "http://localhost:5010";
+import { API_BASE_URL as api } from "../config";
 
 export async function getEmployeePayroll(employeeId, year, month) {
   const res = await axios.get(`${api}/employees/${employeeId}/payroll`, {

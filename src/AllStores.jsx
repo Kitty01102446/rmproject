@@ -8,9 +8,10 @@ import { FiMapPin } from "react-icons/fi";
 import AOS from "aos"; // 1. Import AOS
 import "aos/dist/aos.css"; // 2. Import CSS
 import "./AllStores.css";
+import { API_BASE_URL } from "./config";
 
 const PER_PAGE = 8;
-const IMAGE_BASE_URL = "http://localhost:5010/static/images";
+const IMAGE_BASE_URL = `${API_BASE_URL}/static/images`;
 const NEARBY_PROVINCES = ["ขอนแก่น", "กรุงเทพมหานคร", "เชียงราย", "ชัยภูมิ", "นครสวรรค์", "กระบี่"];
 
 // คำค้นหาที่ใช้จับคู่ตัวเลือก "บริการ" จากแถบค้นหาหน้าแรก กับชื่อบริการจริงของร้าน

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = "http://localhost:5010";
+import { API_BASE_URL as api } from "../config";
 
 // ค้นหาร้านใกล้เคียง -- ส่ง lat/lng (จาก GPS) หรือ province (fallback เมื่อไม่อนุญาตตำแหน่ง)
 export async function getNearbyStores({ lat, lng, province, radiusKm } = {}) {

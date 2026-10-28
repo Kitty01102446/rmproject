@@ -1,7 +1,7 @@
 import axios from "axios";
 import { authHeader } from "./auth";
 
-let api = "http://localhost:5010";
+import { API_BASE_URL as api } from "../config";
 
 /* =========================================================
    GET NOTIFICATIONS (ของผู้ใช้ปัจจุบัน)

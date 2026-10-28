@@ -9,8 +9,9 @@ import { getStoreByUser } from "./callapi/call_api_userprofile.jsx";
 import { getStatusMeta } from "./utils/bookingStatus.js";
 import BookingDetailModal from "./components/BookingDetailModal.jsx";
 import { getStoredUser } from "./callapi/auth";
+import { API_BASE_URL } from "./config";
 
-const IMAGE_BASE_URL = "http://localhost:5010/static/images";
+const IMAGE_BASE_URL = `${API_BASE_URL}/static/images`;
 
 export default function UserProfile() {
   const navigate = useNavigate();

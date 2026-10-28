@@ -1,6 +1,6 @@
 import axios from "axios";
 // let api = "http://127.0.0.1:8000";
-let api = "http://localhost:5010";
+import { API_BASE_URL as api } from "../config";
 // import DatatableStrig from "../component/strig";
 export async function GetLogin(email, password) {
   try {

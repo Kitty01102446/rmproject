@@ -1,7 +1,7 @@
 // แก้ไขไฟล์ service (เช่น storeService.js)
 import axios from 'axios';
 
-const api = "http://localhost:5010"; // ตรวจสอบว่า URL ตรงกับ Backend ของคุณ
+import { API_BASE_URL as api } from "../config";
 export async function getTopServices(storeId) {
   try {
     const response = await axios.get(

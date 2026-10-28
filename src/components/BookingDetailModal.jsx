@@ -12,8 +12,9 @@ import {
 import { getStatusMeta, isCustomerReschedulableStatus } from "../utils/bookingStatus";
 import CancelBookingModal from "./CancelBookingModal";
 import RescheduleRequestModal from "./RescheduleRequestModal";
+import { API_BASE_URL } from "../config";
 
-const IMAGE_BASE_URL = "http://localhost:5010/static/images";
+const IMAGE_BASE_URL = `${API_BASE_URL}/static/images`;
 
 const TIMELINE_STEPS = ["จองคิว", "ร้านรับจอง", "ยืนยันวันและเวลา", "เข้ารับบริการ", "เสร็จสิ้น"];
 const THAI_MONTHS = [

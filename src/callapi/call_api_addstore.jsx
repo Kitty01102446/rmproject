@@ -1,7 +1,7 @@
 // แก้ไขไฟล์ service (เช่น storeService.js)
 import axios from 'axios';
 
-const api = "http://localhost:5010"; // ตรวจสอบว่า URL ตรงกับ Backend ของคุณแ
+import { API_BASE_URL as api } from "../config";
 // สำหรับสมัครร้านค้าใหม่ (ใช้ชื่อนี้จะสื่อสารเข้าใจง่าย)
 export async function registerStore(payload) {
   try {

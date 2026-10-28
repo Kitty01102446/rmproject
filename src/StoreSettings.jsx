@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import StoreLocationMap from "./components/StoreLocationMap";
+import { API_BASE_URL } from "./config";
 
 export default function StoreSettings() {
   const [activeTab, setActiveTab] = useState("info");
@@ -36,7 +37,7 @@ export default function StoreSettings() {
     const fetchStore = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5010/store/${storeId}`
+          `${API_BASE_URL}/store/${storeId}`
         );
   
         console.log("API:", res.data);
@@ -72,7 +73,7 @@ export default function StoreSettings() {
   const handleSave = async () => {
     try {
       await axios.put(
-        `http://localhost:5010/store/${storeId}`,
+        `${API_BASE_URL}/store/${storeId}`,
         storeData
       );
       alert("บันทึกสำเร็จ");
@@ -96,7 +97,7 @@ export default function StoreSettings() {
     }
     setSavingLocation(true);
     try {
-      await axios.put(`http://localhost:5010/store/${storeId}/location`, { latitude, longitude });
+      await axios.put(`${API_BASE_URL}/store/${storeId}/location`, { latitude, longitude });
       Swal.fire({ icon: "success", title: "บันทึกตำแหน่งร้านสำเร็จ", toast: true, position: "top-end", timer: 1800, showConfirmButton: false });
     } catch (err) {
       console.error(err);

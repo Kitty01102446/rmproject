@@ -1,7 +1,7 @@
 import axios from "axios";
 import { authHeader } from "./auth";
 
-const api = "http://localhost:5010";
+import { API_BASE_URL as api } from "../config";
 
 export async function getContent(contentType) {
   const res = await axios.get(`${api}/admin/content`, {

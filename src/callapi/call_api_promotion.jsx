@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = "http://localhost:5010";
+import { API_BASE_URL as api } from "../config";
 
 export async function getAllPromotions() {
   const response = await axios.get(`${api}/promotion`, {

@@ -2,8 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getClick_log } from "./callapi/call_api_home.jsx";
 import "./Home2.css";
+import { API_BASE_URL } from "./config";
 
-const IMAGE_BASE_URL = "http://localhost:5010/static/images";
+const IMAGE_BASE_URL = `${API_BASE_URL}/static/images`;
 
 export default function Home2() {
   const [searchArea, setSearchArea] = useState("");

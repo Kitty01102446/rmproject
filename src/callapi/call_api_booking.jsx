@@ -1,7 +1,7 @@
 import axios from "axios";
 import { authHeader } from "./auth";
 
-let api = "http://localhost:5010";
+import { API_BASE_URL as api } from "../config";
 
 /* =========================================================
    CREATE BOOKING  ✅ (อันที่ขาด)
@@ -95,7 +95,7 @@ export async function getAlerts(storeId) {
 
 export async function getScheduleByDate(storeId, date) {
   const response = await axios.get(
-    `http://localhost:5010/schedule/${storeId}/${date}`,
+    `${api}/schedule/${storeId}/${date}`,
     { headers: authHeader() }
   );
   return response.data;

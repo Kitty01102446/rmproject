@@ -3,6 +3,7 @@ import { Outlet, NavLink, useParams, useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import axios from "axios";
 import NotificationBell from "../components/NotificationBell";
+import { API_BASE_URL } from "../config";
 import "./navadmin.css";
 
 export default function StoreLayout() {
@@ -15,7 +16,7 @@ export default function StoreLayout() {
       if (!storeId) return;
       let active = true;
       axios
-        .get(`http://localhost:5010/store/${storeId}`)
+        .get(`${API_BASE_URL}/store/${storeId}`)
         .then((res) => {
           if (!active) return;
           const row = Array.isArray(res.data) ? res.data[0] : res.data;

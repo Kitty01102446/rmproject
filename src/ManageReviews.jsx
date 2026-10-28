@@ -16,6 +16,7 @@ import {
   Title,
 } from "chart.js";
 import "./ManageReviews.css";
+import { API_BASE_URL } from "./config";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -38,7 +39,7 @@ export default function ManageReviews() {
       try {
         setLoading(true);
         setError("");
-        const res = await axios.get(`http://localhost:5010/review/store/${storeId}`);
+        const res = await axios.get(`${API_BASE_URL}/review/store/${storeId}`);
         setReviews(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("โหลดรีวิวผิดพลาด", err);

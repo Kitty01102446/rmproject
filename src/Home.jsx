@@ -6,8 +6,9 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./Home.css";
 import { FiMapPin, FiCalendar, FiScissors, FiDroplet, FiTarget, FiZap, FiTag, FiUsers } from "react-icons/fi";
+import { API_BASE_URL } from "./config";
 
-const IMAGE_BASE_URL = "http://localhost:5010/static/images";
+const IMAGE_BASE_URL = `${API_BASE_URL}/static/images`;
 const NEARBY_PROVINCES = ["ขอนแก่น", "กรุงเทพมหานคร", "เชียงราย", "ชัยภูมิ", "นครสวรรค์", "กระบี่"];
 
 const NAIL_SHAPES = [

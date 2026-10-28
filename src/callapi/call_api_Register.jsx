@@ -1,7 +1,7 @@
 import axios from "axios";
-// let api = "http://127.0.0.1:8000";
-// let api = "http://localhost:5010";
-export const API_BASE_URL = "http://localhost:5010";
+import { API_BASE_URL } from "../config";
+
+export { API_BASE_URL };
 const api = API_BASE_URL;
 /* =========================================================
    LOGIN (ใช้จริงกับ backend)
