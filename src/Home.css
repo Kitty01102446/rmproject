@@ -30,7 +30,7 @@ body {
 }
 
 .container {
-  width: min(1450px, 100%);
+  width: min(1750px, 100%);
   margin: 0 auto;
   padding: 0 40px;
   box-sizing: border-box;

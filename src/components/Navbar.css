@@ -32,7 +32,7 @@
    CONTAINER
 ================================ */
 .navbar-container {
-  width:min(1500px,100%);
+  width:min(1800px,100%);
   margin:auto;
   padding: 16px 24px;    /* 🔥 เท่ากับด้านล่าง */
 }

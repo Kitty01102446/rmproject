@@ -5,8 +5,8 @@
   justify-content: center;
   /* เดิมพึ่งพา class "container-1450" ที่มาจาก AddStore.css ซึ่งหน้านี้ไม่ได้
      import เลยไม่มีผลอะไร ทำให้เนื้อหาชิดขอบจอ -- ใส่ max-width/padding ของตัวเอง
-     ให้ตรงกับระยะขอบของ navbar (padding: 16px 24px, width: min(1500px, 100%)) */
-  width: min(1500px, 100%);
+     ให้ตรงกับระยะขอบของ navbar (padding: 16px 24px, width: min(1800px, 100%)) */
+  width: min(1800px, 100%);
   margin: 0 auto;
   padding: 80px 24px;
   box-sizing: border-box;
