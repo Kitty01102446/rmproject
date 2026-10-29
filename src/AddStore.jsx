@@ -180,20 +180,22 @@ export default function AddStore() {
       console.log("Payload being sent:", payload);
       const result = await registerStore(payload);
 
-      // แก้ไขตรงนี้: ตรวจสอบว่ามีข้อมูลกลับมา (แสดงว่าบันทึกสำเร็จ) 
+      // แก้ไขตรงนี้: ตรวจสอบว่ามีข้อมูลกลับมา (แสดงว่าบันทึกสำเร็จ)
       // หรือตรวจสอบตามที่ API ของคุณส่งมาจริงๆ เช่น result.data หรือ result.id
       if (result) {
-        alert("บันทึกร้านสำเร็จ!");
-        navigate("/StoreDashboard");
+        await Swal.fire({
+          icon: "success",
+          title: "บันทึกคำขอเปิดร้านเรียบร้อยแล้ว",
+          text: "กรุณารอการอนุมัติจากผู้ดูแลระบบ",
+          confirmButtonColor: "#d9789c",
+        });
+        navigate("/UserProfile");
       }
     } catch (err) {
       console.error("Save Error:", err);
       // เช็คว่ามีข้อความ Error จาก Backend ไหม ถ้าไม่มีให้ใช้ข้อความกลาง
-      const errorMsg = err.response?.data?.message || "บันทึกสำเร็จ (แต่ระบบตรวจรับผลลัพธ์ขัดข้อง)";
-      alert("แจ้งเตือน: " + errorMsg);
-
-      // ถ้าข้อมูลลง DB แล้วจริงๆ แต่ยังเข้า Error ให้ลอง navigate ไปเลยเพื่อทดสอบ
-      // navigate("/StoreDashboard"); 
+      const errorMsg = err.response?.data?.message || "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง";
+      Swal.fire({ icon: "error", title: "บันทึกไม่สำเร็จ", text: errorMsg, confirmButtonColor: "#d9789c" });
     }
 
 
